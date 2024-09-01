@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjhrbenbmpgte"
-path="res://.godot/imported/Reload.svg-e8fda9fe2515cb0953c37b9d27b7baef.ctex"
+uid="uid://c8jqnvh2qxehl"
+path="res://.godot/imported/Progress1.svg-d95bcc1c6489d92dd86df63f56df095f.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/rational/icons/Reload.svg"
-dest_files=["res://.godot/imported/Reload.svg-e8fda9fe2515cb0953c37b9d27b7baef.ctex"]
+source_file="res://addons/rational/icons/progress/Progress1.svg"
+dest_files=["res://.godot/imported/Progress1.svg-d95bcc1c6489d92dd86df63f56df095f.ctex"]
 
 [params]
 

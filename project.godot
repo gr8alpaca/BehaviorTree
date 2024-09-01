@@ -10,12 +10,26 @@ config_version=5
 
 [application]
 
-config/name="BehaviorTree"
+config/name="Rational"
 run/main_scene="res://TestScene/TestMainScene.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/bg_color=Color(0.0859838, 0.0859838, 0.0859837, 1)
 boot_splash/show_image=false
-config/icon="res://TestScene/icon.svg"
+
+[debug]
+
+gdscript/warnings/unassigned_variable=0
+gdscript/warnings/unused_variable=0
+gdscript/warnings/unused_local_constant=0
+gdscript/warnings/unused_private_class_variable=0
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/unused_signal=0
+gdscript/warnings/unreachable_code=0
+gdscript/warnings/standalone_ternary=0
+gdscript/warnings/integer_division=0
+gdscript/warnings/narrowing_conversion=0
+gdscript/warnings/int_as_enum_without_cast=0
+gdscript/warnings/int_as_enum_without_match=0
 
 [editor_plugins]
 
@@ -27,6 +41,7 @@ folder_colors={
 "res://TestScene/": "gray",
 "res://addons/": "gray",
 "res://addons/rational/": "blue",
+"res://addons/rational/components/": "green",
 "res://addons/rational/icons/": "purple",
 "res://addons/rational/scripts/": "yellow"
 }

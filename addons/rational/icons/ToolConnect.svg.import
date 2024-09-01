@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjhrbenbmpgte"
-path="res://.godot/imported/Reload.svg-e8fda9fe2515cb0953c37b9d27b7baef.ctex"
+uid="uid://d0e8w8wl0eknl"
+path="res://.godot/imported/ToolConnect.svg-d10a1f174d121114d2a6f02008a662e8.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/rational/icons/Reload.svg"
-dest_files=["res://.godot/imported/Reload.svg-e8fda9fe2515cb0953c37b9d27b7baef.ctex"]
+source_file="res://addons/rational/icons/ToolConnect.svg"
+dest_files=["res://.godot/imported/ToolConnect.svg-d10a1f174d121114d2a6f02008a662e8.ctex"]
 
 [params]
 

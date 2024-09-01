@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjhrbenbmpgte"
-path="res://.godot/imported/Reload.svg-e8fda9fe2515cb0953c37b9d27b7baef.ctex"
+uid="uid://c2bsq0s6r1ghx"
+path="res://.godot/imported/Sequence.svg-cf0c80edc956fab101921ea163b96f82.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/rational/icons/Reload.svg"
-dest_files=["res://.godot/imported/Reload.svg-e8fda9fe2515cb0953c37b9d27b7baef.ctex"]
+source_file="res://addons/rational/icons/Sequence.svg"
+dest_files=["res://.godot/imported/Sequence.svg-cf0c80edc956fab101921ea163b96f82.ctex"]
 
 [params]
 

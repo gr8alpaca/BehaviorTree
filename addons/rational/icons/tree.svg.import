@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://deryyg2hbmaaw"
-path="res://.godot/imported/tree.svg-a5bfd643698efcb5e814eb748a329484.ctex"
+path="res://.godot/imported/Tree.svg-71ee50591f03edacdcb8ecc669509ba2.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/rational/icons/tree.svg"
-dest_files=["res://.godot/imported/tree.svg-a5bfd643698efcb5e814eb748a329484.ctex"]
+source_file="res://addons/rational/icons/Tree.svg"
+dest_files=["res://.godot/imported/Tree.svg-71ee50591f03edacdcb8ecc669509ba2.ctex"]
 
 [params]
 

@@ -1,0 +1,100 @@
+[gd_scene load_steps=21 format=3 uid="uid://cqlh6e0fg4ujq"]
+
+[ext_resource type="Texture2D" uid="uid://di2wc3o4q6mm" path="res://addons/rational/icons/StatusError.svg" id="1_hfd0a"]
+[ext_resource type="Texture2D" uid="uid://c8jqnvh2qxehl" path="res://addons/rational/icons/progress/Progress1.svg" id="2_awrda"]
+[ext_resource type="Texture2D" uid="uid://dwnb2er0cisqb" path="res://addons/rational/icons/progress/Progress2.svg" id="3_8r7uy"]
+[ext_resource type="Texture2D" uid="uid://0l66widh5vmv" path="res://addons/rational/icons/progress/Progress3.svg" id="4_du3fg"]
+[ext_resource type="Texture2D" uid="uid://xu35evcpgnei" path="res://addons/rational/icons/progress/Progress4.svg" id="5_e0gg1"]
+[ext_resource type="Texture2D" uid="uid://bmhv8up1qumdn" path="res://addons/rational/icons/progress/Progress5.svg" id="6_e30hf"]
+[ext_resource type="Texture2D" uid="uid://ci48tvdso7aw8" path="res://addons/rational/icons/progress/Progress6.svg" id="7_c62ll"]
+[ext_resource type="Texture2D" uid="uid://devwwlu2rqt0k" path="res://addons/rational/icons/progress/Progress7.svg" id="8_yb3kw"]
+[ext_resource type="Texture2D" uid="uid://oye25kn7ai44" path="res://addons/rational/icons/progress/Progress8.svg" id="9_1ligp"]
+[ext_resource type="Texture2D" uid="uid://gq8ctm18yiq8" path="res://addons/rational/icons/StatusSuccess.svg" id="10_g5bju"]
+[ext_resource type="Texture2D" uid="uid://cc51relmrs63n" path="res://addons/rational/icons/StatusWarning.svg" id="11_645ia"]
+[ext_resource type="Script" path="res://addons/rational/components/RationalTree.gd" id="12_m8cgi"]
+[ext_resource type="Script" path="res://addons/rational/components/blackboard.gd" id="13_6m14f"]
+[ext_resource type="Script" path="res://addons/rational/components/rational_component.gd" id="14_52kbb"]
+[ext_resource type="Script" path="res://addons/rational/components/sequence.gd" id="14_h6yjr"]
+[ext_resource type="Script" path="res://addons/rational/components/decorators/decorator.gd" id="15_i1vsp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0cnec"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hfd0a")
+}],
+"loop": true,
+"name": &"failure",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_awrda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8r7uy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_du3fg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_e0gg1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_e30hf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_c62ll")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_yb3kw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1ligp")
+}],
+"loop": true,
+"name": &"loading",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_g5bju")
+}],
+"loop": true,
+"name": &"success",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_645ia")
+}],
+"loop": true,
+"name": &"warning",
+"speed": 5.0
+}]
+
+[sub_resource type="Resource" id="Resource_vwwh4"]
+script = ExtResource("13_6m14f")
+data = {}
+
+[sub_resource type="Resource" id="Resource_bqpy2"]
+script = ExtResource("15_i1vsp")
+children = Array[ExtResource("14_52kbb")]([])
+
+[sub_resource type="Resource" id="Resource_w3rew"]
+script = ExtResource("14_h6yjr")
+children = Array[ExtResource("14_52kbb")]([SubResource("Resource_bqpy2")])
+
+[node name="TestSceneCharacter" type="Node2D"]
+
+[node name="Actor" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0cnec")
+animation = &"success"
+autoplay = "success"
+frame_progress = 0.563199
+
+[node name="RationalTree" type="Node" parent="Actor" node_paths=PackedStringArray("actor")]
+script = ExtResource("12_m8cgi")
+actor = NodePath("..")
+blackboard = SubResource("Resource_vwwh4")
+root = SubResource("Resource_w3rew")
