@@ -1,11 +1,7 @@
 @tool
 class_name RationalEditor extends PanelContainer
-const GROUP: StringName = &"RationalEditor"
 
-var floating_window: Window:
-	set(val):
-		floating_window = val
-		
+var floating_window: Window
 
 func _on_make_floating() -> void:
 	var plugin: EditorPlugin = Engine.get_singleton(&"Rational")

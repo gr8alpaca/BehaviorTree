@@ -30,20 +30,22 @@ func _set(property: StringName, value: Variant) -> bool:
 		else:
 			children = [value]
 
-	return false
+	return super(property, value)
 
 
 func _get_property_list() -> Array[Dictionary]:
-	return \
-		[
+	var result: Array[Dictionary] = []
+	if children.is_empty(): 
+		result.assign(super())
+	result.append(
 			{
 				"name": &"child",
 				"type": TYPE_OBJECT,
 				"hint": PROPERTY_HINT_RESOURCE_TYPE,
 				"hint_string": &"RationalComponent",
 				"usage": PROPERTY_USAGE_EDITOR,
-			}
-		]
+			})
+	return result
 
 func _property_can_revert(property: StringName) -> bool:
 	if property == &"child":

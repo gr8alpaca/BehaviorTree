@@ -20,7 +20,7 @@ func setup(actor: Node, board: Blackboard) -> void:
 		child.setup(actor, board)
 
 
-## Overwrite this function!
+
 func tick(delta: float, board: Blackboard, actor: Node) -> int:
 	return FAILURE
 
@@ -39,38 +39,20 @@ func get_children(recursive: bool = false) -> Array[RationalComponent]:
 
 func _get_property_list() -> Array[Dictionary]:
 	return \
-	[
-		{
-			name = &"child_script",
-			type = TYPE_STRING,
-			hint = PROPERTY_HINT_FILE,
-			hint_string = "*.gd",
-			usage = PROPERTY_USAGE_EDITOR,
-		}
-	]
+		[
+			{
+				name = &"add_child_by_script",
+				type = TYPE_OBJECT,
+				hint = PROPERTY_HINT_RESOURCE_TYPE,
+				hint_string = "GDScript",
+				usage = PROPERTY_USAGE_EDITOR,
+			}
+		]
 
 func _set(property: StringName, value: Variant) -> bool:
 	if Engine.is_editor_hint():
-		if property == &"child_script" and value and FileAccess.file_exists(value):
-			
-			var script: GDScript = load(value)
-			if not script.can_instantiate():
-				print("CANNOT INSTANTIATE SCRIPT!!!!")
-				return false
-
-			var script_obj: Variant = script.new()
-			if not script_obj is RationalComponent:
-				print("Error: %s script did not inherit from RationalComponent!" % self)
-
-			else:
-				print("WERLJSLDJ SETTING !!!!")
-				children.append(script_obj as RationalComponent)
-				children = children
-				return true
-				
+		if property == &"add_child_by_script" and value != null and value is GDScript:
+			if value.can_instantiate():
+				print(value.get_instance_base_type())
+				children += [value.new()]
 	return false
-
-func _get(property: StringName) -> Variant:
-	if property == &"child_script": return ""
-		
-	return null

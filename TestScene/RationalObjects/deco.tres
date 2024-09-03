@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Decorator" load_steps=3 format=3 uid="uid://cvyq1kpvaorty"]
+
+[ext_resource type="Script" path="res://addons/rational/components/rational_component.gd" id="1_68dep"]
+[ext_resource type="Script" path="res://addons/rational/components/decorators/decorator.gd" id="2_1g7qa"]
+
+[resource]
+script = ExtResource("2_1g7qa")
+children = Array[ExtResource("1_68dep")]([])

@@ -12,7 +12,8 @@ func _enter_tree() -> void:
 	
 	frames = preload("editor/editor_style.gd").new()
 	editor = preload("editor/editor_window.tscn").instantiate()
-
+	#preload("inspector/inspector_plugin.gd").new()
+	#add_inspector_plugin()
 	editor.hide()
 	EditorInterface.get_editor_main_screen().add_child(editor)
 

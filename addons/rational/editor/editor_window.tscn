@@ -79,7 +79,7 @@ placeholder_text = "Filter..."
 right_icon = ExtResource("3_ku4ry")
 
 [node name="ItemListTree" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxTree"]
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(128, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -100,7 +100,7 @@ placeholder_text = "Filter..."
 right_icon = ExtResource("3_ku4ry")
 
 [node name="ItemListLeaf" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf"]
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(128, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
