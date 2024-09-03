@@ -1,5 +1,5 @@
-@icon("res://addons/rational/icons/Leaf.svg")
 @tool
+@icon("res://addons/rational/icons/Leaf.svg")
 class_name Leaf extends RationalComponent
 
 # const EXPRESSION_PLACEHOLDER: String = "Insert an expression..."

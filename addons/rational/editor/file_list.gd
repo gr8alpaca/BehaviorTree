@@ -35,10 +35,4 @@ func _get_dialogue_files_in_filesystem() -> Array[Resource]:
 		.get_resource_filesystem()\
 		.get_filesystem()
 
-
-
-
-
-	
-
 	return files

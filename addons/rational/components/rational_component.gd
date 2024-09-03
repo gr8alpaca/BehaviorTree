@@ -1,4 +1,5 @@
 @tool
+@icon("../icons/RationalComponent.svg")
 class_name RationalComponent extends Resource
 
 enum {SUCCESS, FAILURE, RUNNING}
@@ -6,6 +7,8 @@ enum {SUCCESS, FAILURE, RUNNING}
 func setup(actor: Node, board: Blackboard) -> void:
 	pass
 
+func no_tick(delta: float, board: Blackboard, actor: Node) -> void:
+	pass
 
 ## Executes this node and returns a status code.
 func tick(delta: float, board: Blackboard, actor: Node) -> int:
@@ -23,7 +26,6 @@ func get_children(recursive: bool = false) -> Array[RationalComponent]:
 		
 func _get_configuration_warnings() -> PackedStringArray:
 	return PackedStringArray()
-
 
 func _set(property: StringName, value: Variant) -> bool:
 	if Engine.is_editor_hint():

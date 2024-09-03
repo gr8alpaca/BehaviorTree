@@ -1,40 +1,34 @@
-@icon("../icons/Conditional.svg")
 @tool
+@icon("../icons/Conditional.svg")
 class_name ConditionLeaf extends Leaf
 
-const EXPRESSION_PLACEHOLDER: String = "Enter condition..."
+## Expression that will return [code]SUCCESS[/code] if true
+## and [code]FAILURE[/code] if false. Executes expression using [member RationalTree.actor]
+## and a reference to the blackboard as variable: [code]board[/code].
+@export_multiline var condition: String: set = set_condition
 
-@export_multiline 
-var condition: String: set = set_condition
-
+## Expression that is executed on [method tick] call. Defaults to 
+## [code]false[/code] if parse fails.
 var expression: Expression
 
 
 func tick(delta: float, board: Blackboard, actor: Node) -> int:
-	return SUCCESS if expression.execute([], board) else FAILURE
+	return SUCCESS if expression.execute([board], actor, false) else FAILURE
 
 
 func set_condition(val: String) -> void:
 	condition = val
-
-	if not condition:
-		condition = EXPRESSION_PLACEHOLDER
-
 	expression = parse_expression(condition)
 	changed.emit()
 
 
 func parse_expression(source: String) -> Expression:
 	var result: Expression = Expression.new()
-	var error: int = result.parse(source)
+	var error: int = result.parse(source, PackedStringArray(["board"]))
 
 	if not Engine.is_editor_hint() and error != OK:
-		push_error(
-			(
-				"<Condition:%s> Couldn't parse expression with source: `%s` Error text: `%s`"
-				% [resource_name, source, result.get_error_text()]
-			)
-		)
+		push_error("<Condition> Couldn't parse expression with source: `%s` Error text: `%s`" % [source, result.get_error_text()])
+		result.parse("false", PackedStringArray(["board"]))
 
 	return result
 

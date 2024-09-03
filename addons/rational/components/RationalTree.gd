@@ -1,5 +1,5 @@
-@icon("../icons/Tree.svg")
 @tool
+@icon("../icons/Tree.svg")
 class_name RationalTree extends Node
 
 signal tree_enabled
@@ -12,7 +12,7 @@ enum {SUCCESS, FAILURE, RUNNING}
 @export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Blackboard", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE)
 var blackboard: Blackboard = Blackboard.new(): set = set_blackboard
 
-@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Composite", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE)
+@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Root", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE)
 var root: Composite: set = set_root
 
 var action_debug_label: bool = false

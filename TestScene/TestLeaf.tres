@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="Leaf" load_steps=2 format=3 uid="uid://7h1rj8yp63bw"]
-
-[ext_resource type="Script" path="res://addons/rational/components/leaf.gd" id="1_0rah5"]
-
-[resource]
-script = ExtResource("1_0rah5")

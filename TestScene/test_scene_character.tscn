@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cqlh6e0fg4ujq"]
+[gd_scene load_steps=25 format=3 uid="uid://cqlh6e0fg4ujq"]
 
 [ext_resource type="Texture2D" uid="uid://di2wc3o4q6mm" path="res://addons/rational/icons/StatusError.svg" id="1_hfd0a"]
 [ext_resource type="Texture2D" uid="uid://c8jqnvh2qxehl" path="res://addons/rational/icons/progress/Progress1.svg" id="2_awrda"]
@@ -13,9 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://cc51relmrs63n" path="res://addons/rational/icons/StatusWarning.svg" id="11_645ia"]
 [ext_resource type="Script" path="res://addons/rational/components/RationalTree.gd" id="12_m8cgi"]
 [ext_resource type="Script" path="res://addons/rational/components/blackboard.gd" id="13_6m14f"]
-[ext_resource type="Script" path="res://addons/rational/components/rational_component.gd" id="14_52kbb"]
-[ext_resource type="Script" path="res://addons/rational/components/sequence.gd" id="14_h6yjr"]
-[ext_resource type="Script" path="res://addons/rational/components/decorators/decorator.gd" id="15_i1vsp"]
+[ext_resource type="Texture2D" uid="uid://c6xt30y0jeyie" path="res://addons/rational/icons/Debug.svg" id="14_4x1kh"]
+[ext_resource type="Script" path="res://addons/rational/components/rational_component.gd" id="14_jhjid"]
+[ext_resource type="Script" path="res://addons/rational/components/decorators/root.gd" id="15_rmrht"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0cnec"]
 animations = [{
@@ -77,17 +77,50 @@ animations = [{
 script = ExtResource("13_6m14f")
 data = {}
 
-[sub_resource type="Resource" id="Resource_bqpy2"]
-script = ExtResource("15_i1vsp")
-children = Array[ExtResource("14_52kbb")]([])
+[sub_resource type="Resource" id="Resource_hayy4"]
+script = ExtResource("15_rmrht")
+tree_name = "Actor2"
+children = Array[ExtResource("14_jhjid")]([])
 
-[sub_resource type="Resource" id="Resource_w3rew"]
-script = ExtResource("14_h6yjr")
-children = Array[ExtResource("14_52kbb")]([SubResource("Resource_bqpy2")])
+[sub_resource type="CircleShape2D" id="CircleShape2D_b1mpv"]
+radius = 200.0
+
+[sub_resource type="Resource" id="Resource_1sinj"]
+script = ExtResource("13_6m14f")
+data = {}
+
+[sub_resource type="Resource" id="Resource_ykp3e"]
+script = ExtResource("15_rmrht")
+tree_name = "Actor2"
+children = Array[ExtResource("14_jhjid")]([])
+
+[sub_resource type="GDScript" id="GDScript_vfo5c"]
+script/source = "@tool
+extends CharacterBody2D
+
+
+
+func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint(): return
+	const SPEED:= 300.0
+	var direction := Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\").normalized()
+	
+	if direction:
+		velocity = direction * SPEED
+		
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
+
+	move_and_slide()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8e8r4"]
+size = Vector2(50, 50)
 
 [node name="TestSceneCharacter" type="Node2D"]
 
 [node name="Actor" type="AnimatedSprite2D" parent="."]
+position = Vector2(924, 424)
 sprite_frames = SubResource("SpriteFrames_0cnec")
 animation = &"success"
 autoplay = "success"
@@ -97,4 +130,52 @@ frame_progress = 0.563199
 script = ExtResource("12_m8cgi")
 actor = NodePath("..")
 blackboard = SubResource("Resource_vwwh4")
-root = SubResource("Resource_w3rew")
+root = SubResource("Resource_hayy4")
+
+[node name="Area2D" type="Area2D" parent="Actor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actor/Area2D"]
+shape = SubResource("CircleShape2D_b1mpv")
+
+[node name="Actor2" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0cnec")
+animation = &"success"
+autoplay = "success"
+frame_progress = 0.563199
+
+[node name="RationalTree" type="Node" parent="Actor2" node_paths=PackedStringArray("actor")]
+script = ExtResource("12_m8cgi")
+actor = NodePath("..")
+blackboard = SubResource("Resource_1sinj")
+root = SubResource("Resource_ykp3e")
+
+[node name="Area2D" type="Area2D" parent="Actor2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actor2/Area2D"]
+shape = SubResource("CircleShape2D_b1mpv")
+
+[node name="Point" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(128, 512)
+gizmo_extents = 30.0
+
+[node name="ColorRect" type="ColorRect" parent="Point"]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.501961, 0.447059, 1, 1)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(222, 107)
+motion_mode = 1
+floor_stop_on_slope = false
+floor_constant_speed = true
+script = SubResource("GDScript_vfo5c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_8e8r4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(2, 2)
+texture = ExtResource("14_4x1kh")

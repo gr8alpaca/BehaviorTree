@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="Action" load_steps=2 format=3 uid="uid://d3ykaip5546ag"]
-
-[ext_resource type="Script" path="res://addons/rational/components/action.gd" id="1_ch254"]
-
-[resource]
-script = ExtResource("1_ch254")
