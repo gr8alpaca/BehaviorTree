@@ -32,13 +32,16 @@ var action_debug_label: bool = false
 func _enter_tree() -> void:
 	if not actor:
 		actor = get_parent()
-
-
+	if Engine.is_editor_hint():
+		var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
+		if plugin.cache and root: 
+			plugin.cache.add(root)
+		
 func _ready() -> void:
-	PROPERTY_USAGE_ALWAYS_DUPLICATE
+	
 	if not Engine.is_editor_hint():
 		disabled = false
-
+	
 # func setup(actor: Node, board: Blackboard) -> void:
 # 	pass
 

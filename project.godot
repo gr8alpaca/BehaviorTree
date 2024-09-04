@@ -46,7 +46,6 @@ folder_colors={
 "res://addons/rational/editor/": "orange",
 "res://addons/rational/icons/": "pink",
 "res://addons/rational/inspector/": "teal",
-"res://addons/rational/references/": "gray",
 "res://addons/rational/scripts/": "yellow",
 "res://script_templates/": "gray"
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cqlh6e0fg4ujq"]
+[gd_scene load_steps=35 format=3 uid="uid://cqlh6e0fg4ujq"]
 
 [ext_resource type="Texture2D" uid="uid://di2wc3o4q6mm" path="res://addons/rational/icons/StatusError.svg" id="1_hfd0a"]
 [ext_resource type="Texture2D" uid="uid://c8jqnvh2qxehl" path="res://addons/rational/icons/progress/Progress1.svg" id="2_awrda"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://TestScene/RationalObjects/move.gd" id="16_x6nh3"]
 [ext_resource type="Script" path="res://addons/rational/components/condition.gd" id="17_7tq7s"]
 [ext_resource type="Script" path="res://addons/rational/components/sequence.gd" id="18_jckpc"]
+[ext_resource type="Script" path="res://addons/rational/components/fallback.gd" id="18_tfffo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0cnec"]
 animations = [{
@@ -92,18 +93,31 @@ radius = 200.0
 script = ExtResource("13_6m14f")
 data = {}
 
-[sub_resource type="Resource" id="Resource_iltt1"]
-script = ExtResource("16_x6nh3")
-target_global_position = Vector2(1, 0)
-speed = 50.0
-
 [sub_resource type="Resource" id="Resource_qyh3n"]
 script = ExtResource("17_7tq7s")
 condition = "visible == true"
 
+[sub_resource type="Resource" id="Resource_iltt1"]
+script = ExtResource("16_x6nh3")
+target_global_position = Vector2(500, 500)
+speed = 50.0
+
+[sub_resource type="Resource" id="Resource_nt518"]
+script = ExtResource("17_7tq7s")
+condition = "global_position.x + global_position.y - 1000 < 100"
+
+[sub_resource type="Resource" id="Resource_2ksyq"]
+script = ExtResource("16_x6nh3")
+target_global_position = Vector2(500, 500)
+speed = 50.0
+
+[sub_resource type="Resource" id="Resource_wryan"]
+script = ExtResource("18_tfffo")
+children = Array[ExtResource("14_jhjid")]([null, SubResource("Resource_nt518"), SubResource("Resource_2ksyq")])
+
 [sub_resource type="Resource" id="Resource_fxygu"]
 script = ExtResource("18_jckpc")
-children = Array[ExtResource("14_jhjid")]([SubResource("Resource_iltt1"), SubResource("Resource_qyh3n")])
+children = Array[ExtResource("14_jhjid")]([SubResource("Resource_qyh3n"), SubResource("Resource_iltt1"), SubResource("Resource_wryan")])
 
 [sub_resource type="Resource" id="Resource_ykp3e"]
 script = ExtResource("15_rmrht")

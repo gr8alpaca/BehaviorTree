@@ -1,37 +1,60 @@
 @tool
 class_name RationalData extends Resource
+const LOCAL_PATH: String = "/data/cache.tres"
+
+signal added(root: Root)
+signal removed(root: Root)
+
+@export
+var data: Dictionary = \
+	{
+		# resource = 
+		#	{
+		#		scene = {
+		#			scene_file_path = "res://addons/rational/editor/main.tscn",
+		#			node_path = tree.get_path(),
+		#			id = resource.resource_scene_unique_id,
+		#		is_root = false,
+		#		is_root = false,
+		#	},
+		# 
+	}
+
+@export var cache: Array[Resource] = []
 
 
-signal about_to_write
+func add(tree: RationalTree) -> void:
+	var root: Root = tree.root
+	if root not in cache: 
+		cache.append(root)
+		added.emit(root)
+	save_cache()
 
 
-func add_resource(res: Resource) -> void:
-	pass
-
-func get_directory_resource_paths(dir: EditorFileSystemDirectory) -> PackedStringArray:
-	var result: PackedStringArray = PackedStringArray()
-	# for i: int in dir.get_file_count(i):
-	# 	match file_dir.get_file_type(i):
-	# 		"PackedScene":
-	# 			pass
-	return result
+func remove(root: Root) -> void:
+	removed.emit(root)
 
 
 func save_cache() -> void:
-	about_to_write.emit()
+	resource_name = "RationalCache"
+	var path: String = Engine.get_singleton("Rational").get_script().resource_path.get_base_dir() + LOCAL_PATH
+	take_over_path(path)
+	var err: int = ResourceSaver.save(self, path, 
+	ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS | ResourceSaver.FLAG_CHANGE_PATH)
 
-	# self.take_over_path("rational_cache.tres"
 
-	ResourceSaver.save(self, "rational_cache.tres", ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
-
-
-# func build_cache() -> void:
-# 	var file_system: EditorFileSystem = EditorInterface.get_resource_filesystem()
-
-# 	while file_system.is_scanning():
-# 		await Engine.get_main_loop().process_frame
-
-# 	var file_dir: EditorFileSystemDirectory = file_system.get_filesystem()
-
-	# for i: int in file_dir.get_file_count(i):
-	# 	pass
+static func load_cache() -> RationalData:
+	var path: String = Engine.get_singleton("Rational").get_script().resource_path.get_base_dir() + LOCAL_PATH
+	
+	if not FileAccess.file_exists(path):	
+		if not DirAccess.dir_exists_absolute(path): 
+			DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+		var data := RationalData.new()
+		data.save_cache()
+		return data
+		
+	
+	return ResourceLoader.load(path, "RationalData", ResourceLoader.CACHE_MODE_REPLACE_DEEP)
+		
+	
+	

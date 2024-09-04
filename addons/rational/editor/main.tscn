@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcexs711wjhws"]
+[gd_scene load_steps=8 format=3 uid="uid://dcexs711wjhws"]
 
-[ext_resource type="Script" path="res://addons/rational/editor/rational_editor.gd" id="1_vcojj"]
+[ext_resource type="Script" path="res://addons/rational/editor/main.gd" id="1_vcojj"]
 [ext_resource type="Texture2D" uid="uid://ck5wr3nwuxwhc" path="res://addons/rational/editor/icons/MakeFloating.svg" id="2_rhita"]
 [ext_resource type="Texture2D" uid="uid://75cbha306kl8" path="res://addons/rational/icons/Search.svg" id="3_w42pw"]
+[ext_resource type="Script" path="res://addons/rational/editor/leaf_tree.gd" id="4_0erff"]
 [ext_resource type="Texture2D" uid="uid://c6cbdi2ea0hru" path="res://addons/rational/editor/icons/Forward.svg" id="4_on6xq"]
 [ext_resource type="Texture2D" uid="uid://cnk30s76yidgx" path="res://addons/rational/editor/icons/Back.svg" id="5_xutei"]
 
@@ -48,6 +49,7 @@ text = "Edit"
 switch_on_hover = true
 
 [node name="Debug" type="MenuButton" parent="VBoxContainer/MenuHBox"]
+visible = false
 layout_mode = 2
 switch_on_hover = true
 
@@ -78,7 +80,7 @@ layout_mode = 2
 placeholder_text = "Filter..."
 right_icon = ExtResource("3_w42pw")
 
-[node name="ItemListTree" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxTree"]
+[node name="TreeList" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxTree"]
 custom_minimum_size = Vector2(128, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -99,13 +101,12 @@ size_flags_horizontal = 3
 placeholder_text = "Filter..."
 right_icon = ExtResource("3_w42pw")
 
-[node name="ItemListLeaf" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf"]
+[node name="ItemListLeaf" type="Tree" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf"]
 custom_minimum_size = Vector2(128, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-item_count = 1
-item_0/text = "Text here"
+script = ExtResource("4_0erff")
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/main"]
 layout_mode = 2

@@ -3,54 +3,19 @@ extends EditorScript
 
 var data: Dictionary = {key = "key"}
 
-
+var tw: Tween
 func _run() -> void:
-	var s:= get_scene()
-	var root: Root = s.get_node("%RationalTree2").root
-	#var dict:= inst_to_dict(root)
-	#print(dict)
-	#var inst: Root = dict_to_inst(dict)
-	
-	
-	#print("Meta: ", root.get_rid())
-	#print("Root: ", root)
-	
-	return
-	#print("Instance: ", inst)
-	return
-	var paths:= ResourceLoader.get_dependencies(root.get_script().resource_path)
-	for path: String in paths:
-		var id : int = ResourceLoader.get_resource_uid(path)
-		ResourceLoader.load(path)
-	#print(JSON.stringify(root, "\n", true, true))
-	#print(ResourceUID.id_to_text(uid))
-	#var_to_bytes_with_objects()
-	#var fs : EditorFileSystem = EditorInterface.get_resource_filesystem()
-	#var dir:= fs.get_filesystem()
-	#var sdir:= fs.get_filesystem_path("res://TestScene/RationalObjects/")
-	
-	pass
-	
-	
-	# var test: Root = get_scene().get_node("%RationalTree2").root
-	# var dict:= inst_to_dict(test)
-	
-	#for key in dict.keys():
-		#printt(key, "\n", dict[key])
-		
-	#res://TestScene/test_scene_character.tscn::Resource_ykp3e
-	
-	
-	
-	
-	#for i: int in sdir.get_file_count():
-		#printt(sdir.get_file_script_class_extends(i) + ": ", sdir.get_file_script_class_name(i))
-		#print(fs.get_file_type(sdir.get_file_path(i)))
-	
-	#print("\n".join(await find_resource_type(&"RationalComponent")))
-	#print(Array(data.keys().duplicate(), TYPE_STRING, "", null))
-	#var scene: Node = get_scene()
-	#var gn: GraphNode = scene.get_node("%GraphNode")
+	var scene:= get_scene()
+	var fs : EditorFileSystem = EditorInterface.get_resource_filesystem()
+	var plugin: EditorPlugin = Engine.get_singleton("Rational")
+	var tree: RationalTree = scene.get_node("%RationalTree2")
+	var root: Root = tree.root
+	#print(tree.root.children.get_typed_script())
+	tw = Engine.get_main_loop().create_tween().set_loops(5)
+	tw.tween_callback(print_inspector_path).set_delay(0.25)
+
+func print_inspector_path() -> void:
+	print_rich("[color=pink]%s[/color]:%s"% [EditorInterface.get_inspector().get_edited_object(),EditorInterface.get_inspector().get_selected_path()])
 
 func find_resource_type(resource_type: StringName) -> PackedStringArray:
 	var fs : EditorFileSystem = EditorInterface.get_resource_filesystem()
