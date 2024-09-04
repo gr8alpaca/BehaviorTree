@@ -2,7 +2,7 @@
 class_name Decorator extends Composite
 
 
-func tick(delta: float, board: Blackboard, actor: Node) -> int:
+func _tick(delta: float, board: Blackboard, actor: Node) -> int:
 	return modify_response((children[0].tick(delta, board, actor)))
 
 
@@ -35,7 +35,7 @@ func _set(property: StringName, value: Variant) -> bool:
 
 func _get_property_list() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
-	if children.is_empty(): 
+	if children.is_empty():
 		result.assign(super())
 	result.append(
 			{

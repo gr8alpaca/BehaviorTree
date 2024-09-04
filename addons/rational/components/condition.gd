@@ -12,7 +12,7 @@ class_name ConditionLeaf extends Leaf
 var expression: Expression
 
 
-func tick(delta: float, board: Blackboard, actor: Node) -> int:
+func _tick(delta: float, board: Blackboard, actor: Node) -> int:
 	return SUCCESS if expression.execute([board], actor, false) else FAILURE
 
 

@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://dcexs711wjhws"]
 
-[ext_resource type="Script" path="res://addons/rational/editor/rational_editor.gd" id="1_eg1ks"]
-[ext_resource type="Texture2D" uid="uid://ck5wr3nwuxwhc" path="res://addons/rational/editor/icons/MakeFloating.svg" id="2_ait3e"]
-[ext_resource type="Texture2D" uid="uid://75cbha306kl8" path="res://addons/rational/icons/Search.svg" id="3_ku4ry"]
-[ext_resource type="Texture2D" uid="uid://cnk30s76yidgx" path="res://addons/rational/editor/icons/Back.svg" id="4_jqen7"]
-[ext_resource type="Texture2D" uid="uid://c6cbdi2ea0hru" path="res://addons/rational/editor/icons/Forward.svg" id="5_wvpas"]
+[ext_resource type="Script" path="res://addons/rational/editor/rational_editor.gd" id="1_vcojj"]
+[ext_resource type="Texture2D" uid="uid://ck5wr3nwuxwhc" path="res://addons/rational/editor/icons/MakeFloating.svg" id="2_rhita"]
+[ext_resource type="Texture2D" uid="uid://75cbha306kl8" path="res://addons/rational/icons/Search.svg" id="3_w42pw"]
+[ext_resource type="Texture2D" uid="uid://c6cbdi2ea0hru" path="res://addons/rational/editor/icons/Forward.svg" id="4_on6xq"]
+[ext_resource type="Texture2D" uid="uid://cnk30s76yidgx" path="res://addons/rational/editor/icons/Back.svg" id="5_xutei"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_irr6g"]
 content_margin_left = 4.0
@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_eg1ks")
+script = ExtResource("1_vcojj")
 metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -60,7 +60,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 tooltip_text = "Make Rational editor floating."
-icon = ExtResource("2_ait3e")
+icon = ExtResource("2_rhita")
 flat = true
 
 [node name="main" type="HSplitContainer" parent="VBoxContainer"]
@@ -76,7 +76,7 @@ layout_mode = 2
 [node name="SearchTree" type="LineEdit" parent="VBoxContainer/main/VSplitContainer/VBoxTree"]
 layout_mode = 2
 placeholder_text = "Filter..."
-right_icon = ExtResource("3_ku4ry")
+right_icon = ExtResource("3_w42pw")
 
 [node name="ItemListTree" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxTree"]
 custom_minimum_size = Vector2(128, 100)
@@ -97,7 +97,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Filter..."
-right_icon = ExtResource("3_ku4ry")
+right_icon = ExtResource("3_w42pw")
 
 [node name="ItemListLeaf" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf"]
 custom_minimum_size = Vector2(128, 100)
@@ -205,8 +205,8 @@ layout_mode = 2
 tooltip_text = "Collapse/Uncollapse left panel."
 toggle_mode = true
 button_pressed = true
-texture_normal = ExtResource("5_wvpas")
-texture_pressed = ExtResource("4_jqen7")
+texture_normal = ExtResource("4_on6xq")
+texture_pressed = ExtResource("5_xutei")
 
 [connection signal="pressed" from="VBoxContainer/MenuHBox/MakeFloating" to="." method="_on_make_floating"]
 [connection signal="toggled" from="VBoxContainer/main/GraphEdit/CollapsePanelContainer/ToggleLeft" to="VBoxContainer/main/VSplitContainer" method="set_visible"]

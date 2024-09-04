@@ -39,11 +39,12 @@ enabled=PackedStringArray("res://addons/rational/plugin.cfg")
 
 folder_colors={
 "res://TestScene/": "gray",
-"res://addons/": "gray",
+"res://addons/": "yellow",
 "res://addons/rational/": "blue",
 "res://addons/rational/components/": "green",
+"res://addons/rational/data/": "gray",
 "res://addons/rational/editor/": "orange",
-"res://addons/rational/icons/": "purple",
+"res://addons/rational/icons/": "pink",
 "res://addons/rational/inspector/": "teal",
 "res://addons/rational/references/": "gray",
 "res://addons/rational/scripts/": "yellow",

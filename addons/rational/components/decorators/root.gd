@@ -13,3 +13,12 @@ class_name Root extends Decorator
 #     var props:= super._get_property_list()
 #     props[0]["hint_string"] = "Root"
 #     return props
+
+
+func _notification(what: int) -> void:
+    if not Engine.is_editor_hint(): return
+
+    match what:
+        
+        NOTIFICATION_POSTINITIALIZE:
+            pass

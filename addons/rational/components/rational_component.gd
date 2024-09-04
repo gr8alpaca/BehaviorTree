@@ -4,14 +4,14 @@ class_name RationalComponent extends Resource
 
 enum {SUCCESS, FAILURE, RUNNING}
 
-func setup(actor: Node, board: Blackboard) -> void:
-	pass
 
-func no_tick(delta: float, board: Blackboard, actor: Node) -> void:
-	pass
+## Override this method to customize behavior when not receiving a tick...
+func _no_tick(delta: float, board: Blackboard, actor: Node) -> int:
+	return FAILURE
 
-## Executes this node and returns a status code.
-func tick(delta: float, board: Blackboard, actor: Node) -> int:
+
+## Override this method to customize tree behavior.
+func _tick(delta: float, board: Blackboard, actor: Node) -> int:
 	return SUCCESS
 
 
@@ -23,7 +23,7 @@ func get_children(recursive: bool = false) -> Array[RationalComponent]:
 # func propagate_call(method: StringName, args: Array = []) -> void:
 # 	if has_method(method): callv(method, args)
 
-		
+
 func _get_configuration_warnings() -> PackedStringArray:
 	return PackedStringArray()
 
@@ -40,3 +40,12 @@ func _set(property: StringName, value: Variant) -> bool:
 				resource_local_to_scene = true
 				
 	return false
+
+
+## Do [b]not[/b] override this method, use [method _tick] instead.
+func tick(delta: float, board: Blackboard, actor: Node) -> int:
+	return SUCCESS
+
+## Do [b]not[/b] override this method, use [method _no_tick] instead.
+func no_tick(delta: float, board: Blackboard, actor: Node) -> int:
+	return FAILURE

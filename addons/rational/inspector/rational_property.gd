@@ -11,10 +11,12 @@ func _on_button_pressed() -> void:
 	var file_dialog:= EditorFileDialog.new()
 	file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
 	file_dialog.add_filter("*.gd", "GDScript")
-	EditorInterface.get_base_control().add_child(file_dialog)
-	file_dialog.popup_file_dialog()
+
 	file_dialog.file_selected.connect(_on_file_dialog_file_selected)
 	file_dialog.close_requested.connect(_on_file_dialog_close_requested.bind(file_dialog))
+	
+	EditorInterface.popup_dialog_centered_ratio(file_dialog, 0.7)
+
 
 func _update_property() -> void:
 	pass

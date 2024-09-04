@@ -5,7 +5,7 @@ signal children_changed
 
 
 @export_custom(PROPERTY_HINT_TYPE_STRING, "24/17:RationalComponent",
-PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_ALWAYS_DUPLICATE)
+PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_ALWAYS_DUPLICATE )
 var children: Array[RationalComponent] = []: set = set_children
 
 
@@ -20,8 +20,7 @@ func setup(actor: Node, board: Blackboard) -> void:
 		child.setup(actor, board)
 
 
-
-func tick(delta: float, board: Blackboard, actor: Node) -> int:
+func _tick(delta: float, board: Blackboard, actor: Node) -> int:
 	return FAILURE
 
 

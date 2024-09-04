@@ -12,7 +12,7 @@ enum {SUCCESS, FAILURE, RUNNING}
 @export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Blackboard", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE)
 var blackboard: Blackboard = Blackboard.new(): set = set_blackboard
 
-@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Root", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE)
+@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Root", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE) #PROPERTY_USAGE_
 var root: Composite: set = set_root
 
 var action_debug_label: bool = false
@@ -22,7 +22,6 @@ var action_debug_label: bool = false
 	set(val):
 		if disabled == val: return
 		disabled = val
-		# upd
 
 		if disabled:
 			tree_disabled.emit()
@@ -52,9 +51,7 @@ func _process(delta: float) -> void:
 
 
 func tick() -> int:
-	if disabled: return FAILURE
-
-
+	if disabled: return FAILURE 
 	return SUCCESS
 
 
@@ -74,13 +71,22 @@ func set_actor(val) -> void:
 
 	update_configuration_warnings()
 
+
 func set_blackboard(val) -> void:
 	blackboard = val
 
 	update_configuration_warnings()
 
+
 func set_root(val) -> void:
 	root = val
+
+	# if Engine.is_editor_hint():
+	# 	if Engine.has_singleton(&"Rational"):
+	# 		var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
+	# 		if plugin.cache != null:
+	# 			plugin.cache.add()
+	# 		var err:= ResourceSaver.save(root, )
 
 	update_configuration_warnings()
 
