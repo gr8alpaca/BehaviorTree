@@ -1,6 +1,8 @@
 @tool
 extends EditorPlugin
 
+var inspector_plugin: RefCounted 
+
 ## Cache for all RationalComponent resources. 
 var cache: Resource
 
@@ -8,12 +10,16 @@ var editor: PanelContainer
 var frames: RefCounted
 
 func _enter_tree() -> void:
+	
+	scene_saved.connect(_save_external_data.unbind(1))
+	scene_changed.connect(_on_scene_changed)
+	
 	name = &"Rational"
 	
 	if Engine.is_editor_hint():
 		Engine.register_singleton(&"Rational", self)
 		
-		cache = RationalData.load_cache()
+		cache = preload("data/cache.gd").load_cache()
 		Engine.set_meta(&"Cache", cache)
 		
 		frames = preload("editor/editor_style.gd").new()
@@ -24,8 +30,8 @@ func _enter_tree() -> void:
 		
 		editor.hide()
 		EditorInterface.get_editor_main_screen().add_child(editor)
-		
-		
+		inspector_plugin = preload("inspector/inspector_plugin.gd").new()
+		add_inspector_plugin(inspector_plugin)
 		
 		
 		print("Rational initialized")
@@ -33,7 +39,11 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
 	if Engine.is_editor_hint():
+		cache.save_cache()
 		editor.close()
+		
+		remove_inspector_plugin(inspector_plugin)
+		inspector_plugin = null
 		
 		Engine.unregister_singleton(&"Rational")
 		frames = null
@@ -41,6 +51,9 @@ func _exit_tree() -> void:
 		for sname: StringName in [&"Cache" ,&"Frames", &"Main"]:
 			Engine.remove_meta(sname)
 				
+
+func _on_scene_changed(node: Node) -> void:
+	print_rich("Scene changed to: [color=yellow]", node,"[/color] @ ", Ut.ts())
 
 func focus_object(object: RationalComponent) -> void:
 	pass

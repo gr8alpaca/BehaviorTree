@@ -7,26 +7,44 @@ func _can_handle(object: Object) -> bool:
 
 
 func _parse_begin(object: Object) -> void:
-	var but:= create_button()
-	add_custom_control(but)
+	if not Engine.has_meta(&"Main"):
+		print_rich("[color=red]ERROR[/color]: Engine does not have meta \"[color=red]Main[/color]\"")
+		return
 	
+	#var but: Button = create_button()
+	#but.pressed.connect(Engine.get_meta(&"Main").edit_tree.bind(object))
+	#add_custom_control(but)
 	
-func create_button() -> Button:
-	var button: Button =Button.new()
-	button.text = "Open Tree"
-	button.icon = button.get_theme_icon(&"ClassList", &"EditorIcons") #EditorInterface.get_editor_theme().get_icon()	
-	button.pressed.connect(_on_button_pressed)
 
+func create_button(callable: Callable) -> Control:
+	var hbox:= HBoxContainer.new()
+	hbox.theme = EditorInterface.get_editor_theme() 
+	
+	var button: Button =Button.new()
+	button.theme = EditorInterface.get_editor_theme() 
+	button.theme_type_variation = &"InspectorActionButton"
+	
+	button.text = "Edit Tree..."
+	button.tooltip_text = "Switch to RationalTree Editor."
+	
+	button.icon = button.theme.get_icon(&"ClassList", &"EditorIcons")
+	button.icon_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	
+	if callable: button.pressed.connect(callable)
+		
 	return button
 
 
-func _on_button_pressed() -> void:
-	var plugin: EditorPlugin = Engine.get_singleton("Rational")
-	plugin.editor
-	EditorInterface.set_main_screen_editor("Rational")
-	pass
-
 func _parse_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint, 
 	hint_string: String, usage_flags: int, wide: bool) -> bool:
+		
+	if name != "actor": 
+		return false
+		
+	if not Engine.has_meta(&"Main"):
+		print_rich("[color=red]ERROR[/color]: Engine does not have meta \"[color=red]Main[/color]\"")
+		return false
 
+	add_custom_control(create_button(Engine.get_meta(&"Main").edit_tree.bind(object)))
+	
 	return false

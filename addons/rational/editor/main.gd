@@ -3,28 +3,32 @@ extends PanelContainer
 
 var floating_window: Window
 
-func _enter_tree() -> void:
-	#var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
-	#var file_dock: FileSystemDock = EditorInterface.get_file_system_dock()
+
+func _ready() -> void:
 	for sig: Signal in [
 			EditorInterface.get_inspector().resource_selected, 
 			EditorInterface.get_file_system_dock().instantiate
 		]:
 			var callable: Callable = get("_on_" + sig.get_name())
 			if not sig.is_connected(callable): sig.connect(callable)
-			
 
-
+func _enter_tree() -> void:
+	pass
+	
+func edit_tree(tree: RationalTree) -> void:
+	EditorInterface.set_main_screen_editor("Rational")
 
 func _on_instantiate(paths: PackedStringArray) -> void:
-	pass
+	print_rich("Paths instantiated: \n[color=yellow]", "[/color] | [color=yellow]".join(paths),"[/color] \n@ ", Ut.ts())
 
 
 func _on_resource_selected(resource: Resource, path: String) -> void:
-	pass
+	print_rich("Selected [color=orange]%s[/color] at \"%s\"" % [resource, Ut.col(path)])
+
 
 func _on_scene_changed(scene_root: Node) -> void:
 	pass
+
 
 func _on_make_floating() -> void:
 	var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
@@ -105,3 +109,7 @@ func make_visible(is_visible: bool) -> void:
 		EditorInterface.set_main_screen_editor.call_deferred("2D")
 	else:
 		visible = is_visible
+
+
+func _on_filter_text_changed(new_text: String) -> void:
+	pass

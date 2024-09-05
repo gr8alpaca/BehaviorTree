@@ -1,12 +1,15 @@
 @tool
-class_name RationalData extends Resource
+extends Resource
 const LOCAL_PATH: String = "/data/cache.tres"
 
 signal added(root: Root)
 signal removed(root: Root)
 
-@export
-var data: Dictionary = \
+@export var force_save: bool:
+	set(val):
+		if val: save_cache()
+
+@export var data: Dictionary = \
 	{
 		# resource = 
 		#	{
@@ -19,6 +22,7 @@ var data: Dictionary = \
 		#	},
 		# 
 	}
+
 
 @export var cache: Array[Resource] = []
 
@@ -37,24 +41,39 @@ func remove(root: Root) -> void:
 
 func save_cache() -> void:
 	resource_name = "RationalCache"
+	
+	assign_ids()
+	
 	var path: String = Engine.get_singleton("Rational").get_script().resource_path.get_base_dir() + LOCAL_PATH
 	take_over_path(path)
-	var err: int = ResourceSaver.save(self, path, 
-	ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS | ResourceSaver.FLAG_CHANGE_PATH)
+	
+	var err: int = ResourceSaver.save(self, path, ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+
+func assign_ids() -> void:
+	var uid: PackedInt32Array = []
+	for item: Resource in cache:
+		if item.resource_path and not ResourceLoader.get_resource_uid(item.resource_path):
+			var id: int = ResourceUID.create_id()
+			data[id] = item
+			ResourceUID.set_id(id, item.resource_path)
+			print_rich("UID Created: " + Ut.col(str(id), "cyan"), "\tResource: ", Ut.col(str(item), "orange"))
+			
 
 
-static func load_cache() -> RationalData:
+
+static func load_cache() -> Resource:
 	var path: String = Engine.get_singleton("Rational").get_script().resource_path.get_base_dir() + LOCAL_PATH
 	
-	if not FileAccess.file_exists(path):	
+	if not FileAccess.file_exists(path):
 		if not DirAccess.dir_exists_absolute(path): 
 			DirAccess.make_dir_recursive_absolute(path.get_base_dir())
-		var data := RationalData.new()
+		var data : Resource = Resource.new()
+		data.set_script(preload("cache.gd"))
 		data.save_cache()
 		return data
-		
 	
-	return ResourceLoader.load(path, "RationalData", ResourceLoader.CACHE_MODE_REPLACE_DEEP)
-		
+	
+	return ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REPLACE_DEEP)
+	
 	
 	

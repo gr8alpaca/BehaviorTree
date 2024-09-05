@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcexs711wjhws"]
+[gd_scene load_steps=9 format=3 uid="uid://dcexs711wjhws"]
 
 [ext_resource type="Script" path="res://addons/rational/editor/main.gd" id="1_vcojj"]
 [ext_resource type="Texture2D" uid="uid://ck5wr3nwuxwhc" path="res://addons/rational/editor/icons/MakeFloating.svg" id="2_rhita"]
 [ext_resource type="Texture2D" uid="uid://75cbha306kl8" path="res://addons/rational/icons/Search.svg" id="3_w42pw"]
 [ext_resource type="Script" path="res://addons/rational/editor/leaf_tree.gd" id="4_0erff"]
+[ext_resource type="Script" path="res://addons/rational/editor/tree_list.gd" id="4_hbcub"]
 [ext_resource type="Texture2D" uid="uid://c6cbdi2ea0hru" path="res://addons/rational/editor/icons/Forward.svg" id="4_on6xq"]
 [ext_resource type="Texture2D" uid="uid://cnk30s76yidgx" path="res://addons/rational/editor/icons/Back.svg" id="5_xutei"]
 
@@ -86,7 +87,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 item_count = 1
+fixed_icon_size = Vector2i(16, 16)
 item_0/text = "Text here"
+script = ExtResource("4_hbcub")
+active_paths = PackedStringArray()
 
 [node name="VBoxLeaf" type="VBoxContainer" parent="VBoxContainer/main/VSplitContainer"]
 layout_mode = 2
@@ -102,10 +106,12 @@ placeholder_text = "Filter..."
 right_icon = ExtResource("3_w42pw")
 
 [node name="ItemListLeaf" type="Tree" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+columns = 2
 script = ExtResource("4_0erff")
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/main"]
@@ -210,4 +216,6 @@ texture_normal = ExtResource("4_on6xq")
 texture_pressed = ExtResource("5_xutei")
 
 [connection signal="pressed" from="VBoxContainer/MenuHBox/MakeFloating" to="." method="_on_make_floating"]
+[connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxTree/SearchTree" to="VBoxContainer/main/VSplitContainer/VBoxTree/TreeList" method="_on_filter_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/HBoxContainer/SearchLeaf" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" method="_on_filter_text_changed"]
 [connection signal="toggled" from="VBoxContainer/main/GraphEdit/CollapsePanelContainer/ToggleLeft" to="VBoxContainer/main/VSplitContainer" method="set_visible"]

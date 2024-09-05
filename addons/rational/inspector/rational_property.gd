@@ -1,12 +1,14 @@
 @tool
 extends EditorProperty
 
+
 func _ready() -> void:
 	var but: Button = preload("rational_picker.gd").new()
 	but.text = "Add child from script..."
 	but.icon = preload("../editor/icons/Load.svg")
 	but.pressed.connect(_on_button_pressed)
 	
+
 func _on_button_pressed() -> void:
 	var file_dialog:= EditorFileDialog.new()
 	file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE

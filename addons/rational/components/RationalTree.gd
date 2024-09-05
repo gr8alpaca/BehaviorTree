@@ -9,14 +9,13 @@ enum {SUCCESS, FAILURE, RUNNING}
 
 @export var actor: Node: set = set_actor
 
-@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Blackboard", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE)
+@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Blackboard", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NEVER_DUPLICATE)
 var blackboard: Blackboard = Blackboard.new(): set = set_blackboard
 
-@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Root", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE) #PROPERTY_USAGE_
+@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Root", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NO_INSTANCE_STATE) #PROPERTY_USAGE_
 var root: Composite: set = set_root
 
 var action_debug_label: bool = false
-
 
 @export var disabled: bool = true:
 	set(val):
@@ -25,6 +24,7 @@ var action_debug_label: bool = false
 
 		if disabled:
 			tree_disabled.emit()
+			
 		else:
 			tree_enabled.emit()
 
@@ -32,13 +32,9 @@ var action_debug_label: bool = false
 func _enter_tree() -> void:
 	if not actor:
 		actor = get_parent()
-	if Engine.is_editor_hint():
-		var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
-		if plugin.cache and root: 
-			plugin.cache.add(root)
-		
-func _ready() -> void:
 	
+	
+func _ready() -> void:
 	if not Engine.is_editor_hint():
 		disabled = false
 	
@@ -66,31 +62,36 @@ func call_tree(method: StringName, args: Array = []) -> void:
 
 
 func can_tick() -> bool:
-	return _get_configuration_warnings().is_empty()
+	return not disabled and _get_configuration_warnings().is_empty() 
 
 
-func set_actor(val) -> void:
+func set_actor(val: Node) -> void:
 	actor = val
 
 	update_configuration_warnings()
 
 
-func set_blackboard(val) -> void:
+func set_blackboard(val: Blackboard) -> void:
+	if not val:
+		val = Blackboard.new()
+	
 	blackboard = val
-
+	
 	update_configuration_warnings()
 
 
-func set_root(val) -> void:
+func set_root(val: Root) -> void:
+	if not val:
+		val = Root.new()
+	
 	root = val
+	
+	if actor: 
+		root.resource_name = actor.name
 
-	# if Engine.is_editor_hint():
-	# 	if Engine.has_singleton(&"Rational"):
-	# 		var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
-	# 		if plugin.cache != null:
-	# 			plugin.cache.add()
-	# 		var err:= ResourceSaver.save(root, )
-
+	if Engine.is_editor_hint() and Engine.has_meta(&"Cache"):
+		Engine.get_meta(&"Cache").add(self)
+	
 	update_configuration_warnings()
 
 
@@ -99,11 +100,5 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	if not actor:
 		warnings.append("No Actor set")
-
-	if not blackboard:
-		warnings.append("No Blackboard set")
-
-	if not root:
-		warnings.append("No Composite set")
 
 	return warnings
