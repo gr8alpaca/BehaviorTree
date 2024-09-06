@@ -4,41 +4,38 @@ class_name Ut extends EditorScript
 var data: Dictionary = {key = "key"}
 
 var tw: Tween
+const UTIL:= preload("res://addons/rational/util.gd")
+
 func _run() -> void:
-	check_in_scene()
 	var theme: Theme = EditorInterface.get_editor_theme()
 	var fs : EditorFileSystem = EditorInterface.get_resource_filesystem()
 	var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
-	
-	#print(tree.owner.get_path_to(tree))
-	EditorInterface.get_editor_paths()
-	#print(theme.has_icon(&"RationalComponent", &"EditorIcons"))
-	
-	#var root: Root = tree.root
-	var config_path:= EditorInterface.get_editor_paths().get_cache_dir().path_join("global_script_class_cache.cfg")
-	var con:= ConfigFile.new()
-	con.load(config_path)
-	for sec in con.get_sections():
-		for key in con.get_section_keys(sec):
-			print(sec,key, con.get_value(sec, key,))
-	printt(con.get_value("", "list"))
-	
-	#tw = Engine.get_main_loop().create_tween().set_loops(5)
-	#tw.tween_callback(print_inspector_path).set_delay(0.25)
-func check_in_scene() -> void:
 	var scene:= get_scene()
-	var theme: Theme = EditorInterface.get_editor_theme()
-	if not scene or scene is not Node2D: return
 	
-	var tree: RationalTree = scene.get_node(^"%RationalTree2")
-	#printt(inst_to_dict(tree.root ))
-	var script: Script = tree.root.get_script()
+	var t: Tree = plugin.editor.get_node(^"%ItemListLeaf")
+	#UTIL.initialize_icons()
+	#t.icons.merge(Engine.get_meta(&"Icons", {}))
 	
-	#script.get_
-	printt(type_exists(&"Root"))
-
-func _on_scene_changed(new_scene: Node) -> void:
-	print("New scene: ", new_scene)
+	t.columns = 2
+	t.clear()
+	
+	var t1:= t.create_item()
+	
+	t1.set_text_alignment(0, HORIZONTAL_ALIGNMENT_LEFT)
+	#t1.set_cell_mode(0, TreeItem.CELL_MODE_ICON)
+	t1.set_icon_region(0, Rect2(Vector2.ZERO, Vector2(16,16)*EditorInterface.get_editor_scale()))
+	t1.set_icon(0, UTIL.get_icon(&"Leaf"))
+	
+	#t1.set_expand_right()
+	t1.set_editable(1, false)
+	t1.set_cell_mode(1, TreeItem.CELL_MODE_STRING)
+	t1.set_text_alignment(1, HORIZONTAL_ALIGNMENT_LEFT)
+	t1.set_text(1, "Test Item String")
+	
+	t1.set_text_alignment(1, HORIZONTAL_ALIGNMENT_RIGHT)
+	var button_id: int = t1.get_button_count(1)
+	t1.add_button(1, theme.get(&"EditorIcons/icons/GuiVisibilityVisible"), button_id, false, "Make tree item visible")
+	t1.set_metadata(1, true)
 
 func print_inspector_path() -> void:
 	var inspector:= EditorInterface.get_inspector()

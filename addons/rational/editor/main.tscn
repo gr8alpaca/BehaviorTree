@@ -218,4 +218,5 @@ texture_pressed = ExtResource("5_xutei")
 [connection signal="pressed" from="VBoxContainer/MenuHBox/MakeFloating" to="." method="_on_make_floating"]
 [connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxTree/SearchTree" to="VBoxContainer/main/VSplitContainer/VBoxTree/TreeList" method="_on_filter_text_changed"]
 [connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/HBoxContainer/SearchLeaf" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" method="_on_filter_text_changed"]
+[connection signal="button_clicked" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" method="_on_button_clicked"]
 [connection signal="toggled" from="VBoxContainer/main/GraphEdit/CollapsePanelContainer/ToggleLeft" to="VBoxContainer/main/VSplitContainer" method="set_visible"]

@@ -1,9 +1,9 @@
 @tool
 extends Resource
-const LOCAL_PATH: String = "/data/cache.tres"
 
 signal added(root: Root)
 signal removed(root: Root)
+
 
 @export var force_save: bool:
 	set(val):
@@ -24,12 +24,13 @@ signal removed(root: Root)
 	}
 
 
+# @export_custom(PROPERTY_HINT_ARRAY_TYPE, "Resource", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_NEVER_DUPLICATE)
 @export var cache: Array[Resource] = []
 
 
 func add(tree: RationalTree) -> void:
 	var root: Root = tree.root
-	if root not in cache: 
+	if root not in cache:
 		cache.append(root)
 		added.emit(root)
 	save_cache()
@@ -44,10 +45,9 @@ func save_cache() -> void:
 	
 	assign_ids()
 	
-	var path: String = Engine.get_singleton("Rational").get_script().resource_path.get_base_dir() + LOCAL_PATH
-	take_over_path(path)
-	
-	var err: int = ResourceSaver.save(self, path, ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+	var err: int = ResourceSaver.save(self, "cache.tres", ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+	if err != OK:
+		printerr("\t ERROR: ", error_string(err), "Could not save resource: ", self, )
 
 func assign_ids() -> void:
 	var uid: PackedInt32Array = []
@@ -59,21 +59,10 @@ func assign_ids() -> void:
 			print_rich("UID Created: " + Ut.col(str(id), "cyan"), "\tResource: ", Ut.col(str(item), "orange"))
 			
 
-
-
 static func load_cache() -> Resource:
-	var path: String = Engine.get_singleton("Rational").get_script().resource_path.get_base_dir() + LOCAL_PATH
-	
-	if not FileAccess.file_exists(path):
-		if not DirAccess.dir_exists_absolute(path): 
-			DirAccess.make_dir_recursive_absolute(path.get_base_dir())
-		var data : Resource = Resource.new()
-		data.set_script(preload("cache.gd"))
+	if not FileAccess.file_exists("cache.gd"):
+		var data: Resource = preload("cache.gd").new()
 		data.save_cache()
 		return data
 	
-	
-	return ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REPLACE_DEEP)
-	
-	
-	
+	return ResourceLoader.load("cache.gd", "", ResourceLoader.CACHE_MODE_REPLACE_DEEP)

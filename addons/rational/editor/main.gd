@@ -6,7 +6,7 @@ var floating_window: Window
 
 func _ready() -> void:
 	for sig: Signal in [
-			EditorInterface.get_inspector().resource_selected, 
+			EditorInterface.get_inspector().resource_selected,
 			EditorInterface.get_file_system_dock().instantiate
 		]:
 			var callable: Callable = get("_on_" + sig.get_name())
@@ -19,7 +19,7 @@ func edit_tree(tree: RationalTree) -> void:
 	EditorInterface.set_main_screen_editor("Rational")
 
 func _on_instantiate(paths: PackedStringArray) -> void:
-	print_rich("Paths instantiated: \n[color=yellow]", "[/color] | [color=yellow]".join(paths),"[/color] \n@ ", Ut.ts())
+	print_rich("Paths instantiated: \n[color=yellow]", "[/color] | [color=yellow]".join(paths), "[/color] \n@ ", Ut.ts())
 
 
 func _on_resource_selected(resource: Resource, path: String) -> void:
@@ -33,7 +33,7 @@ func _on_scene_changed(scene_root: Node) -> void:
 func _on_make_floating() -> void:
 	var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
 	
-	if not plugin:
+	if not plugin or plugin.editor != self:
 		return
 		
 	if floating_window:
@@ -90,7 +90,7 @@ func close() -> void:
 	## MOVE THESE TO READY!!!!!!!
 	for sig: Signal in \
 		[
-			EditorInterface.get_inspector().resource_selected, 
+			EditorInterface.get_inspector().resource_selected,
 			EditorInterface.get_file_system_dock().instantiate,
 		]:
 		var callable: Callable = get("_on_" + sig.get_name())

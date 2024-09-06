@@ -1,6 +1,8 @@
 @tool
 extends EditorPlugin
 
+const UTIL:= preload("res://addons/rational/util.gd")
+
 var inspector_plugin: RefCounted 
 
 ## Cache for all RationalComponent resources. 
@@ -19,6 +21,8 @@ func _enter_tree() -> void:
 	if Engine.is_editor_hint():
 		Engine.register_singleton(&"Rational", self)
 		
+		UTIL.initialize_icons()
+
 		cache = preload("data/cache.gd").load_cache()
 		Engine.set_meta(&"Cache", cache)
 		
@@ -53,7 +57,8 @@ func _exit_tree() -> void:
 				
 
 func _on_scene_changed(node: Node) -> void:
-	print_rich("Scene changed to: [color=yellow]", node,"[/color] @ ", Ut.ts())
+	pass
+	# print_rich("Scene changed to: [color=yellow]", node,"[/color] @ ", Ut.ts())
 
 func focus_object(object: RationalComponent) -> void:
 	pass

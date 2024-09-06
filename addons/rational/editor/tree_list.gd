@@ -1,8 +1,7 @@
 @tool
 extends ItemList
 
-@export_storage
-var active_paths: PackedStringArray = PackedStringArray()
+@export_storage var active_paths: PackedStringArray = PackedStringArray()
 
 #var data: Array[Dictionary] = []
 var data: Dictionary = {}
@@ -15,7 +14,7 @@ var data: Dictionary = {}
 #}
 
 func _enter_tree() -> void:
-	reload_state()
+	pass
 	
 
 func reload_state() -> void:
@@ -41,5 +40,3 @@ func get_cache() -> Array[Resource]:
 		return []
 		
 	return Engine.get_meta(&"Cache").cache
-	
-	
