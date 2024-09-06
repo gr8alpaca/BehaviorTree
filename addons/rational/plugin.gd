@@ -64,17 +64,13 @@ func focus_object(object: RationalComponent) -> void:
 	pass
 
 func _edit(object: Object) -> void:
-	# if object is RationalTree:
-	# 	EditorInterface.edit_node(object)
+	EditorInterface.inspect_object(object, "", true)
 	if object is RationalComponent:
 		if object is Root: pass
-			
-	var s = EditorInterface.get_inspector()
-	# EditorInterface.edit_node(object)
 
 	
 func _handles(object: Object) -> bool:
-	return false # object is RationalTree or object is RationalComponent
+	return object is RationalTree or object is RationalComponent
 
 
 func _make_visible(visible: bool) -> void:
@@ -87,8 +83,7 @@ func _save_external_data() -> void:
 
 func _has_main_screen() -> bool:
 	return true
-const ICON := preload("icon.svg")
 func _get_plugin_icon() -> Texture2D:
-	return ICON
+	return preload("icon.svg")
 func _get_plugin_name() -> String:
 	return "Rational"

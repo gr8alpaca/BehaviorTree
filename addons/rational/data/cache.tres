@@ -48,5 +48,11 @@ children = Array[ExtResource("1_0o7qq")]([SubResource("Resource_qmq3v")])
 resource_name = "RationalCache"
 script = ExtResource("1_l8sty")
 force_save = false
-data = {}
+data = {
+2385782991816447260: SubResource("Resource_saueg"),
+6016842290868437340: SubResource("Resource_8kuu0"),
+7096223740801699257: SubResource("Resource_saueg"),
+7650901438146511095: SubResource("Resource_saueg"),
+7967577572359485573: SubResource("Resource_8kuu0")
+}
 cache = Array[Resource]([SubResource("Resource_saueg"), SubResource("Resource_8kuu0")])

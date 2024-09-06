@@ -1,5 +1,6 @@
 @tool
 extends Resource
+const PATH: String = "res://addons/rational/data/cache.tres"
 
 signal added(root: Root)
 signal removed(root: Root)
@@ -8,6 +9,7 @@ signal removed(root: Root)
 @export var force_save: bool:
 	set(val):
 		if val: save_cache()
+
 
 @export var data: Dictionary = \
 	{
@@ -41,28 +43,30 @@ func remove(root: Root) -> void:
 
 
 func save_cache() -> void:
-	resource_name = "RationalCache"
-	
-	assign_ids()
-	
-	var err: int = ResourceSaver.save(self, "cache.tres", ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
-	if err != OK:
-		printerr("\t ERROR: ", error_string(err), "Could not save resource: ", self, )
-
-func assign_ids() -> void:
-	var uid: PackedInt32Array = []
 	for item: Resource in cache:
-		if item.resource_path and not ResourceLoader.get_resource_uid(item.resource_path):
-			var id: int = ResourceUID.create_id()
-			data[id] = item
-			ResourceUID.set_id(id, item.resource_path)
-			print_rich("UID Created: " + Ut.col(str(id), "cyan"), "\tResource: ", Ut.col(str(item), "orange"))
-			
+		if ResourceLoader.get_resource_uid(item.resource_path) == -1:
+			assign_uid(item)
+	var err: int = ResourceSaver.save(self, PATH, ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+	if err != OK:
+		printerr("\t ERROR(%s): Could not save at path: " % error_string(err), PATH, )
+
+
+func assign_uid(item: Resource) -> void:
+	var id: int = ResourceUID.create_id()
+	ResourceUID.set_id(id, item.resource_path)
+	data[id] = item
+	print_rich("UID Created: " + Ut.col(str(id), "cyan"), "\tResource: ", Ut.col(str(item), "orange"))
+	
 
 static func load_cache() -> Resource:
-	if not FileAccess.file_exists("cache.gd"):
-		var data: Resource = preload("cache.gd").new()
+	if not ResourceLoader.exists(PATH):
+		var data: Resource = preload("res://addons/rational/data/cache.gd").new()
+		data.resource_name = "RationalCache"
+		data.resource_path = PATH
 		data.save_cache()
 		return data
 	
-	return ResourceLoader.load("cache.gd", "", ResourceLoader.CACHE_MODE_REPLACE_DEEP)
+	var res:= ResourceLoader.load(PATH, "Resource", ResourceLoader.CACHE_MODE_REPLACE_DEEP)
+	
+	
+	return res

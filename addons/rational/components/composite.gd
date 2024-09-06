@@ -4,8 +4,7 @@ class_name Composite extends RationalComponent
 signal children_changed
 
 
-@export_custom(PROPERTY_HINT_TYPE_STRING, "24/17:RationalComponent",
-PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_ALWAYS_DUPLICATE )
+@export_custom(PROPERTY_HINT_TYPE_STRING, "24/17:RationalComponent", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE )
 var children: Array[RationalComponent] = []: set = set_children
 
 
@@ -52,6 +51,9 @@ func _set(property: StringName, value: Variant) -> bool:
 	if Engine.is_editor_hint():
 		if property == &"add_child_by_script" and value != null and value is GDScript:
 			if value.can_instantiate():
+				var instance: Object = value.new()
+				if not instance is RationalComponent:
+					push_error()
 				print(value.get_instance_base_type())
 				children += [value.new()]
 	return false

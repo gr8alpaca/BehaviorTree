@@ -4,6 +4,7 @@ class_name Ut extends EditorScript
 var data: Dictionary = {key = "key"}
 
 var tw: Tween
+
 const UTIL:= preload("res://addons/rational/util.gd")
 
 func _run() -> void:
@@ -11,31 +12,21 @@ func _run() -> void:
 	var fs : EditorFileSystem = EditorInterface.get_resource_filesystem()
 	var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
 	var scene:= get_scene()
+	var cache:= load("res://addons/rational/data/cache.tres")
+	print(JSON.stringify(cache.get_property_list(), "\t"))
+	#var t: Tree = plugin.editor.get_node(^"%ItemListLeaf")
+	#var mainscreen:= scene.get_parent().get_parent().get_parent()
+	#print(scene.get_path())
+	plugin._edit(scene)
+	#print("Node: ", mainscreen, "CHILD COUNT: ", mainscreen.get_child_count())
+	#print(mainscreen.get_children())
+	#var s:= JSON.stringify(cache)
+	#print(s)
+	#print(theme.has_icon(&"RationalTree", &"EditorIcons"))
+	return
 	
-	var t: Tree = plugin.editor.get_node(^"%ItemListLeaf")
-	#UTIL.initialize_icons()
-	#t.icons.merge(Engine.get_meta(&"Icons", {}))
+
 	
-	t.columns = 2
-	t.clear()
-	
-	var t1:= t.create_item()
-	
-	t1.set_text_alignment(0, HORIZONTAL_ALIGNMENT_LEFT)
-	#t1.set_cell_mode(0, TreeItem.CELL_MODE_ICON)
-	t1.set_icon_region(0, Rect2(Vector2.ZERO, Vector2(16,16)*EditorInterface.get_editor_scale()))
-	t1.set_icon(0, UTIL.get_icon(&"Leaf"))
-	
-	#t1.set_expand_right()
-	t1.set_editable(1, false)
-	t1.set_cell_mode(1, TreeItem.CELL_MODE_STRING)
-	t1.set_text_alignment(1, HORIZONTAL_ALIGNMENT_LEFT)
-	t1.set_text(1, "Test Item String")
-	
-	t1.set_text_alignment(1, HORIZONTAL_ALIGNMENT_RIGHT)
-	var button_id: int = t1.get_button_count(1)
-	t1.add_button(1, theme.get(&"EditorIcons/icons/GuiVisibilityVisible"), button_id, false, "Make tree item visible")
-	t1.set_metadata(1, true)
 
 func print_inspector_path() -> void:
 	var inspector:= EditorInterface.get_inspector()

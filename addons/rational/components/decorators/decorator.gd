@@ -35,8 +35,8 @@ func _set(property: StringName, value: Variant) -> bool:
 
 func _get_property_list() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
-	if children.is_empty():
-		result.assign(super())
+	#if children.is_empty():
+		#result.assign(super())
 	result.append(
 			{
 				"name": &"child",
