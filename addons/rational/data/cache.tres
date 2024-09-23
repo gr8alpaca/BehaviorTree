@@ -1,58 +1,7 @@
-[gd_resource type="Resource" load_steps=16 format=3 uid="uid://mwsd4lewpoi4"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://mwsd4lewpoi4"]
 
-[ext_resource type="Script" path="res://addons/rational/components/rational_component.gd" id="1_0o7qq"]
 [ext_resource type="Script" path="res://addons/rational/data/cache.gd" id="1_l8sty"]
-[ext_resource type="Script" path="res://addons/rational/components/decorators/root.gd" id="2_y0qi1"]
-[ext_resource type="Script" path="res://addons/rational/components/condition.gd" id="3_72sio"]
-[ext_resource type="Script" path="res://TestScene/RationalObjects/move.gd" id="4_ahnr5"]
-[ext_resource type="Script" path="res://addons/rational/components/fallback.gd" id="5_ooj8r"]
-[ext_resource type="Script" path="res://addons/rational/components/sequence.gd" id="6_yshon"]
-
-[sub_resource type="Resource" id="Resource_saueg"]
-script = ExtResource("2_y0qi1")
-tree_name = "Actor1"
-children = Array[ExtResource("1_0o7qq")]([])
-
-[sub_resource type="Resource" id="Resource_vk1op"]
-script = ExtResource("3_72sio")
-condition = "visible == true"
-
-[sub_resource type="Resource" id="Resource_a5g0i"]
-script = ExtResource("4_ahnr5")
-target_global_position = Vector2(500, 500)
-speed = 50.0
-
-[sub_resource type="Resource" id="Resource_7lay0"]
-script = ExtResource("3_72sio")
-condition = "global_position.x + global_position.y - 1000 < 100"
-
-[sub_resource type="Resource" id="Resource_y2p0t"]
-script = ExtResource("4_ahnr5")
-target_global_position = Vector2(500, 500)
-speed = 50.0
-
-[sub_resource type="Resource" id="Resource_dl5j4"]
-script = ExtResource("5_ooj8r")
-children = Array[ExtResource("1_0o7qq")]([SubResource("Resource_7lay0"), SubResource("Resource_y2p0t")])
-
-[sub_resource type="Resource" id="Resource_qmq3v"]
-script = ExtResource("6_yshon")
-children = Array[ExtResource("1_0o7qq")]([SubResource("Resource_vk1op"), SubResource("Resource_a5g0i"), SubResource("Resource_dl5j4")])
-
-[sub_resource type="Resource" id="Resource_8kuu0"]
-script = ExtResource("2_y0qi1")
-tree_name = "Actor2"
-children = Array[ExtResource("1_0o7qq")]([SubResource("Resource_qmq3v")])
 
 [resource]
 resource_name = "RationalCache"
 script = ExtResource("1_l8sty")
-force_save = false
-data = {
-2385782991816447260: SubResource("Resource_saueg"),
-6016842290868437340: SubResource("Resource_8kuu0"),
-7096223740801699257: SubResource("Resource_saueg"),
-7650901438146511095: SubResource("Resource_saueg"),
-7967577572359485573: SubResource("Resource_8kuu0")
-}
-cache = Array[Resource]([SubResource("Resource_saueg"), SubResource("Resource_8kuu0")])

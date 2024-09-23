@@ -33,5 +33,11 @@ func parse_expression(source: String) -> Expression:
 	return result
 
 
+func get_class_name() -> Array[StringName]:
+	var names: Array[StringName] = super()
+	names.push_back(&"ConditionLeaf")
+	return names
+
+
 func _get_configuration_warnings() -> PackedStringArray:
 	return PackedStringArray(["Expression invalid"]) if expression.get_error_text() else PackedStringArray()

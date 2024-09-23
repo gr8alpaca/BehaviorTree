@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Root" load_steps=3 format=3 uid="uid://iccm2tf3dd5u"]
-
-[ext_resource type="Script" path="res://addons/rational/components/rational_component.gd" id="1_pg85s"]
-[ext_resource type="Script" path="res://addons/rational/components/decorators/root.gd" id="2_y6pp1"]
-
-[resource]
-script = ExtResource("2_y6pp1")
-tree_name = "Testing..."
-children = Array[ExtResource("1_pg85s")]([])

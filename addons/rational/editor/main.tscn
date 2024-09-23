@@ -1,14 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://dcexs711wjhws"]
+[gd_scene load_steps=12 format=3 uid="uid://dcexs711wjhws"]
 
 [ext_resource type="Script" path="res://addons/rational/editor/main.gd" id="1_vcojj"]
 [ext_resource type="Texture2D" uid="uid://ck5wr3nwuxwhc" path="res://addons/rational/editor/icons/MakeFloating.svg" id="2_rhita"]
 [ext_resource type="Texture2D" uid="uid://75cbha306kl8" path="res://addons/rational/icons/Search.svg" id="3_w42pw"]
-[ext_resource type="Script" path="res://addons/rational/editor/leaf_tree.gd" id="4_0erff"]
-[ext_resource type="Script" path="res://addons/rational/editor/tree_list.gd" id="4_hbcub"]
+[ext_resource type="Script" path="res://addons/rational/editor/tree_display.gd" id="4_0erff"]
+[ext_resource type="Script" path="res://addons/rational/editor/item_list_rational_trees.gd" id="4_hbcub"]
 [ext_resource type="Texture2D" uid="uid://c6cbdi2ea0hru" path="res://addons/rational/editor/icons/Forward.svg" id="4_on6xq"]
+[ext_resource type="Texture2D" uid="uid://bjhrbenbmpgte" path="res://addons/rational/icons/reload.svg" id="5_h6idu"]
 [ext_resource type="Texture2D" uid="uid://cnk30s76yidgx" path="res://addons/rational/editor/icons/Back.svg" id="5_xutei"]
 
-[sub_resource type="Image" id="Image_a18wf"]
+[sub_resource type="Image" id="Image_hgffr"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 5, 224, 224, 224, 74, 224, 224, 224, 120, 224, 224, 224, 105, 230, 230, 230, 30, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 43, 225, 225, 225, 215, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 253, 224, 224, 224, 128, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 238, 238, 238, 15, 224, 224, 224, 228, 224, 224, 224, 227, 226, 226, 226, 77, 224, 224, 224, 8, 224, 224, 224, 32, 225, 225, 225, 157, 224, 224, 224, 255, 225, 225, 225, 109, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 225, 225, 225, 117, 224, 224, 224, 255, 225, 225, 225, 58, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 181, 224, 224, 224, 235, 255, 255, 255, 4, 255, 255, 255, 0, 255, 255, 255, 2, 225, 225, 225, 174, 224, 224, 224, 228, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 86, 224, 224, 224, 255, 226, 226, 226, 44, 230, 230, 230, 10, 224, 224, 224, 213, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 212, 230, 230, 230, 10, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 86, 224, 224, 224, 255, 226, 226, 226, 44, 255, 255, 255, 0, 225, 225, 225, 42, 224, 224, 224, 245, 224, 224, 224, 245, 225, 225, 225, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 180, 224, 224, 224, 238, 255, 255, 255, 3, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 96, 226, 226, 226, 95, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 1, 227, 227, 227, 36, 224, 224, 224, 160, 224, 224, 224, 255, 225, 225, 225, 108, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 64, 224, 224, 224, 255, 224, 224, 224, 249, 225, 225, 225, 124, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 230, 230, 230, 30, 224, 224, 224, 98, 228, 228, 228, 28, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -18,19 +19,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_r2ikx"]
-image = SubResource("Image_a18wf")
-
-[sub_resource type="Image" id="Image_828sl"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 5, 224, 224, 224, 74, 224, 224, 224, 120, 224, 224, 224, 105, 230, 230, 230, 30, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 43, 225, 225, 225, 215, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 253, 224, 224, 224, 128, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 238, 238, 238, 15, 224, 224, 224, 228, 224, 224, 224, 227, 226, 226, 226, 77, 224, 224, 224, 8, 224, 224, 224, 32, 225, 225, 225, 157, 224, 224, 224, 255, 225, 225, 225, 109, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 225, 225, 225, 117, 224, 224, 224, 255, 225, 225, 225, 58, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 181, 224, 224, 224, 235, 255, 255, 255, 4, 255, 255, 255, 0, 255, 255, 255, 2, 225, 225, 225, 174, 224, 224, 224, 228, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 86, 224, 224, 224, 255, 226, 226, 226, 44, 230, 230, 230, 10, 224, 224, 224, 213, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 212, 230, 230, 230, 10, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 86, 224, 224, 224, 255, 226, 226, 226, 44, 255, 255, 255, 0, 225, 225, 225, 42, 224, 224, 224, 245, 224, 224, 224, 245, 225, 225, 225, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 180, 224, 224, 224, 238, 255, 255, 255, 3, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 96, 226, 226, 226, 95, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 1, 227, 227, 227, 36, 224, 224, 224, 160, 224, 224, 224, 255, 225, 225, 225, 108, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 64, 224, 224, 224, 255, 224, 224, 224, 249, 225, 225, 225, 124, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 230, 230, 230, 30, 224, 224, 224, 98, 228, 228, 228, 28, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 12,
-"mipmaps": false,
-"width": 12
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_51orp"]
-image = SubResource("Image_828sl")
+image = SubResource("Image_hgffr")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_irr6g"]
 content_margin_left = 4.0
@@ -105,16 +94,13 @@ layout_mode = 2
 placeholder_text = "Filter..."
 right_icon = ExtResource("3_w42pw")
 
-[node name="TreeList" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxTree"]
+[node name="ItemListRationalTrees" type="ItemList" parent="VBoxContainer/main/VSplitContainer/VBoxTree"]
 custom_minimum_size = Vector2(128, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-item_count = 1
 fixed_icon_size = Vector2i(16, 16)
-item_0/text = "Text here"
 script = ExtResource("4_hbcub")
-active_paths = PackedStringArray()
 
 [node name="VBoxLeaf" type="VBoxContainer" parent="VBoxContainer/main/VSplitContainer"]
 layout_mode = 2
@@ -132,15 +118,17 @@ right_icon = ExtResource("3_w42pw")
 [node name="RefreshListButton" type="Button" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf/HBoxContainer"]
 layout_mode = 2
 theme_override_icons/icon = SubResource("ImageTexture_r2ikx")
-icon = SubResource("ImageTexture_51orp")
+icon = ExtResource("5_h6idu")
 flat = true
 
-[node name="ItemListLeaf" type="Tree" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf"]
+[node name="TreeDisplay" type="Tree" parent="VBoxContainer/main/VSplitContainer/VBoxLeaf"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+select_mode = 1
+scroll_horizontal_enabled = false
 script = ExtResource("4_0erff")
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/main"]
@@ -245,8 +233,9 @@ texture_normal = ExtResource("4_on6xq")
 texture_pressed = ExtResource("5_xutei")
 
 [connection signal="pressed" from="VBoxContainer/MenuHBox/MakeFloating" to="." method="_on_make_floating"]
-[connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxTree/SearchTree" to="VBoxContainer/main/VSplitContainer/VBoxTree/TreeList" method="_on_filter_text_changed"]
-[connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/HBoxContainer/SearchLeaf" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" method="_on_filter_text_changed"]
-[connection signal="pressed" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/HBoxContainer/RefreshListButton" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" method="_on_refresh_list_button_pressed"]
-[connection signal="button_clicked" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/ItemListLeaf" method="_on_button_clicked"]
+[connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxTree/SearchTree" to="VBoxContainer/main/VSplitContainer/VBoxTree/ItemListRationalTrees" method="_on_filter_text_changed"]
+[connection signal="root_selected" from="VBoxContainer/main/VSplitContainer/VBoxTree/ItemListRationalTrees" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/TreeDisplay" method="_on_root_selected"]
+[connection signal="text_changed" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/HBoxContainer/SearchLeaf" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/TreeDisplay" method="_on_filter_text_changed"]
+[connection signal="pressed" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/HBoxContainer/RefreshListButton" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/TreeDisplay" method="_on_refresh_list_button_pressed"]
+[connection signal="button_clicked" from="VBoxContainer/main/VSplitContainer/VBoxLeaf/TreeDisplay" to="VBoxContainer/main/VSplitContainer/VBoxLeaf/TreeDisplay" method="_on_button_clicked"]
 [connection signal="toggled" from="VBoxContainer/main/GraphEdit/CollapsePanelContainer/ToggleLeft" to="VBoxContainer/main/VSplitContainer" method="set_visible"]

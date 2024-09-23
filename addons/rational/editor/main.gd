@@ -1,22 +1,23 @@
 @tool
 extends PanelContainer
 
+signal edit_tree_pressed(tree: RationalTree)
+
 var floating_window: Window
 
 
 func _ready() -> void:
-	for sig: Signal in [
-			EditorInterface.get_inspector().resource_selected,
-			EditorInterface.get_file_system_dock().instantiate
-		]:
-			var callable: Callable = get("_on_" + sig.get_name())
-			if not sig.is_connected(callable): sig.connect(callable)
+	pass
 
 func _enter_tree() -> void:
 	pass
-	
+
+
 func edit_tree(tree: RationalTree) -> void:
+	if not tree or not tree.root: return
 	EditorInterface.set_main_screen_editor("Rational")
+	edit_tree_pressed.emit(tree)
+
 
 func _on_instantiate(paths: PackedStringArray) -> void:
 	print_rich("Paths instantiated: \n[color=yellow]", "[/color] | [color=yellow]".join(paths), "[/color] \n@ ", Ut.ts())
@@ -26,8 +27,14 @@ func _on_resource_selected(resource: Resource, path: String) -> void:
 	print_rich("Selected [color=orange]%s[/color] at \"%s\"" % [resource, Ut.col(path)])
 
 
+# func _on_edited_object_changed() -> void:
+# 	var inspector: EditorInspector = EditorInterface.get_inspector()
+	# if inspector.get_edited_object() is 
+
+
 func _on_scene_changed(scene_root: Node) -> void:
-	pass
+	# for tree: RationalTree in scene_root.find_children("", "RationalTree", true, true):
+		pass
 
 
 func _on_make_floating() -> void:
@@ -72,6 +79,7 @@ func _on_make_floating() -> void:
 	floating_window.position = editor_main_screen.global_position
 	floating_window.transient = true
 	floating_window.close_requested.connect(_on_window_close_requested)
+	
 	EditorInterface.set_main_screen_editor("2D")
 	editor_interface.get_base_control().add_child(floating_window)
 
@@ -86,17 +94,6 @@ func _on_window_close_requested() -> void:
 
 
 func close() -> void:
-	
-	## MOVE THESE TO READY!!!!!!!
-	for sig: Signal in \
-		[
-			EditorInterface.get_inspector().resource_selected,
-			EditorInterface.get_file_system_dock().instantiate,
-		]:
-		var callable: Callable = get("_on_" + sig.get_name())
-		if sig.is_connected(callable): sig.disconnect(callable)
-	
-	
 	if floating_window:
 		floating_window.queue_free()
 	else:
@@ -110,6 +107,3 @@ func make_visible(is_visible: bool) -> void:
 	else:
 		visible = is_visible
 
-
-func _on_filter_text_changed(new_text: String) -> void:
-	pass

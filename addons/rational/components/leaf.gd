@@ -2,6 +2,14 @@
 @icon("res://addons/rational/icons/Leaf.svg")
 class_name Leaf extends RationalComponent
 
+
+
+
+func get_class_name() -> Array[StringName]:
+	var names: Array[StringName] = super()
+	names.push_back(&"Leaf")
+	return names
+
 # const EXPRESSION_PLACEHOLDER: String = "Insert an expression..."
 
 # var expression_data: Dictionary = {}

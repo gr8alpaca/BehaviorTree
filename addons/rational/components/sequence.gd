@@ -8,3 +8,9 @@ func _tick(delta: float, board: Blackboard, actor: Node) -> int:
 		if status != SUCCESS: return status
 
 	return SUCCESS
+
+
+func get_class_name() -> Array[StringName]:
+	var names: Array[StringName] = super()
+	names.push_back(&"Sequence")
+	return names

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cqlh6e0fg4ujq"]
+[gd_scene load_steps=25 format=3 uid="uid://cqlh6e0fg4ujq"]
 
 [ext_resource type="Texture2D" uid="uid://di2wc3o4q6mm" path="res://addons/rational/icons/StatusError.svg" id="1_hfd0a"]
 [ext_resource type="Texture2D" uid="uid://c8jqnvh2qxehl" path="res://addons/rational/icons/progress/Progress1.svg" id="2_awrda"]
@@ -15,11 +15,7 @@
 [ext_resource type="Script" path="res://addons/rational/components/blackboard.gd" id="13_6m14f"]
 [ext_resource type="Texture2D" uid="uid://c6xt30y0jeyie" path="res://addons/rational/icons/Debug.svg" id="14_4x1kh"]
 [ext_resource type="Script" path="res://addons/rational/components/rational_component.gd" id="14_jhjid"]
-[ext_resource type="Script" path="res://addons/rational/components/decorators/root.gd" id="15_rmrht"]
-[ext_resource type="Script" path="res://TestScene/RationalObjects/move.gd" id="16_x6nh3"]
-[ext_resource type="Script" path="res://addons/rational/components/condition.gd" id="17_7tq7s"]
 [ext_resource type="Script" path="res://addons/rational/components/sequence.gd" id="18_jckpc"]
-[ext_resource type="Script" path="res://addons/rational/components/fallback.gd" id="18_tfffo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0cnec"]
 animations = [{
@@ -81,10 +77,11 @@ animations = [{
 script = ExtResource("13_6m14f")
 data = {}
 
-[sub_resource type="Resource" id="Resource_saueg"]
-script = ExtResource("15_rmrht")
-tree_name = "Actor1"
+[sub_resource type="Resource" id="Resource_ly6li"]
+resource_name = "RationalTreeComposite"
+script = ExtResource("18_jckpc")
 children = Array[ExtResource("14_jhjid")]([])
+metadata/RationalTree = null
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1mpv"]
 radius = 200.0
@@ -93,36 +90,13 @@ radius = 200.0
 script = ExtResource("13_6m14f")
 data = {}
 
-[sub_resource type="Resource" id="Resource_vk1op"]
-script = ExtResource("17_7tq7s")
-condition = "visible == true"
-
-[sub_resource type="Resource" id="Resource_a5g0i"]
-script = ExtResource("16_x6nh3")
-target_global_position = Vector2(500, 500)
-speed = 50.0
-
-[sub_resource type="Resource" id="Resource_7lay0"]
-script = ExtResource("17_7tq7s")
-condition = "global_position.x + global_position.y - 1000 < 100"
-
-[sub_resource type="Resource" id="Resource_y2p0t"]
-script = ExtResource("16_x6nh3")
-target_global_position = Vector2(500, 500)
-speed = 50.0
-
-[sub_resource type="Resource" id="Resource_dl5j4"]
-script = ExtResource("18_tfffo")
-children = Array[ExtResource("14_jhjid")]([SubResource("Resource_7lay0"), SubResource("Resource_y2p0t")])
-
-[sub_resource type="Resource" id="Resource_qmq3v"]
+[sub_resource type="Resource" id="Resource_8bm6a"]
+resource_name = "RationalTree2"
 script = ExtResource("18_jckpc")
-children = Array[ExtResource("14_jhjid")]([SubResource("Resource_vk1op"), SubResource("Resource_a5g0i"), SubResource("Resource_dl5j4")])
+children = Array[ExtResource("14_jhjid")]([])
+metadata/RationalTree = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":true,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("12_m8cgi"),"actor":Object(AnimatedSprite2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"sprite_frames":SubResource("SpriteFrames_0cnec"),"animation":&"success","autoplay":"success","frame":0,"frame_progress":0.563199,"speed_scale":1.0,"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"script":null)
+,"blackboard":SubResource("Resource_1sinj"),"root":SubResource("Resource_8bm6a"),"disabled":true,"action_debug_label":false)
 
-[sub_resource type="Resource" id="Resource_8kuu0"]
-script = ExtResource("15_rmrht")
-tree_name = "Actor2"
-children = Array[ExtResource("14_jhjid")]([SubResource("Resource_qmq3v")])
 
 [sub_resource type="GDScript" id="GDScript_vfo5c"]
 script/source = "@tool
@@ -160,7 +134,7 @@ frame_progress = 0.563199
 script = ExtResource("12_m8cgi")
 actor = NodePath("..")
 blackboard = SubResource("Resource_vwwh4")
-root = SubResource("Resource_saueg")
+root = SubResource("Resource_ly6li")
 
 [node name="Area2D" type="Area2D" parent="Actor"]
 
@@ -178,7 +152,7 @@ unique_name_in_owner = true
 script = ExtResource("12_m8cgi")
 actor = NodePath("..")
 blackboard = SubResource("Resource_1sinj")
-root = SubResource("Resource_8kuu0")
+root = SubResource("Resource_8bm6a")
 
 [node name="Area2D" type="Area2D" parent="Actor2"]
 

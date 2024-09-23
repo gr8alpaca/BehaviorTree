@@ -5,69 +5,66 @@ class_name RationalTree extends Node
 signal tree_enabled
 signal tree_disabled
 
+signal ticked(value: int)
+
+
 enum {SUCCESS, FAILURE, RUNNING}
 
+
 @export var actor: Node: set = set_actor
+
 
 @export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Blackboard", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NEVER_DUPLICATE)
 var blackboard: Blackboard = Blackboard.new(): set = set_blackboard
 
-@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Root", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NO_INSTANCE_STATE) #PROPERTY_USAGE_
+
+@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Composite", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NO_INSTANCE_STATE)
 var root: Composite: set = set_root
 
-var action_debug_label: bool = false
 
-@export var disabled: bool = true:
-	set(val):
-		if disabled == val: return
-		disabled = val
+@export var disabled: bool = true: set = set_disabled
 
-		if disabled:
-			tree_disabled.emit()
-			
-		else:
-			tree_enabled.emit()
+
+# TODO
+@export var action_debug_label: bool
 
 
 func _enter_tree() -> void:
 	if not actor:
 		actor = get_parent()
-	
+
 	
 func _ready() -> void:
-	if not Engine.is_editor_hint():
-		disabled = false
+	disabled = Engine.is_editor_hint()
 	
-# func setup(actor: Node, board: Blackboard) -> void:
-# 	pass
 
 func _process(delta: float) -> void:
-	if disabled:
-		set_process(false)
-		return
-
-	root.tick(delta, blackboard, actor)
+	if can_tick():
+		ticked.emit(root.tick(delta, blackboard, actor))
 
 
-func tick() -> int:
-	if disabled: return FAILURE 
-	return SUCCESS
+func can_tick() -> bool:
+	return not disabled and root
 
 
-## Propegates call to all tree components
+## Propagates call to all tree components
 func call_tree(method: StringName, args: Array = []) -> void:
 	for child: RationalComponent in root.get_children(true):
 		if child.has_method(method):
 			child.callv(method, args)
 
 
-func can_tick() -> bool:
-	return not disabled and _get_configuration_warnings().is_empty() 
+func set_disabled(val: bool) -> void:
+	disabled = val
+	set_process(can_tick())
+	if disabled:
+		tree_disabled.emit()
+	else:
+		tree_enabled.emit()
 
 
 func set_actor(val: Node) -> void:
 	actor = val
-
 	update_configuration_warnings()
 
 
@@ -80,25 +77,39 @@ func set_blackboard(val: Blackboard) -> void:
 	update_configuration_warnings()
 
 
-func set_root(val: Root) -> void:
-	if not val:
-		val = Root.new()
-	
-	root = val
-	
-	if actor: 
-		root.resource_name = actor.name
+func set_root(val: Composite) -> void:
+	if root and root.has_meta(&"RationalTree"):
+		root.remove_meta(&"RationalTree")
 
-	if Engine.is_editor_hint() and Engine.has_meta(&"Cache"):
-		Engine.get_meta(&"Cache").add(self)
+	root = val
+
+	set_process(can_tick())
+	
+	if root:
+
+		if actor and not root.resource_name:
+			root.resource_name = name + root.get_class_name().back()
+		
+		if Engine.is_editor_hint():
+			root.set_meta(&"RationalTree", self)
 	
 	update_configuration_warnings()
+
+
+func get_class_name() -> Array[StringName]:
+	return [&"RationalTree"]
 
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = PackedStringArray()
 
-	if not actor:
-		warnings.append("No Actor set")
-
+	if not root:
+		warnings.append("No Root set")
+	
 	return warnings
+
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_PREDELETE when has_user_signal(&"predelete"):
+			emit_signal(&"predelete")

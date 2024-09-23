@@ -10,6 +10,12 @@ func modify_response(response: int) -> int:
 	return response
 
 
+func get_class_name() -> Array[StringName]:
+	var names: Array[StringName] = super()
+	names.push_back(&"Decorator")
+	return names
+
+
 func _get_configuration_warnings() -> PackedStringArray:
 	return PackedStringArray(["Decorator child count != 1"]) if children.size() != 1 else PackedStringArray()
 
