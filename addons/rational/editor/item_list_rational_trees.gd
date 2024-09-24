@@ -24,7 +24,7 @@ func _ready() -> void:
 	if Engine.has_meta(&"Main"):
 		Engine.get_meta(&"Main").edit_tree_pressed.connect(_on_edit_tree_pressed)
 	
-
+	
 	build_list()
 	item_activated.connect(_on_item_activated)
 
@@ -77,13 +77,6 @@ func filter_list(filter: String = "") -> void:
 				sort_items_by_text()
 
 
-func _on_item_activated(index: int) -> void:
-	ensure_current_is_visible()
-	root_selected.emit(get_item_metadata(index))
-
-
-
-
 func get_root_tooltip(root: RationalComponent) -> String:
 	var tree_name: StringName = root.get_meta(&"RationalTree").name if root.has_meta(&"RationalTree") else "none"
 	return "Tree: %s\nType: %s\nPath: %s" % [tree_name, root.get_class_name().back(), root.resource_path]
@@ -101,24 +94,6 @@ func get_item_index(root: RationalComponent) -> int:
 func is_in_list(root: RationalComponent) -> bool:
 	return get_item_index(root) != -1
 
-
-## Creates unique name and changes root [code]resource_name[/code] to it
-func get_unique_root_name(root: RationalComponent) -> String:
-	var root_name: String = root.resource_name if root.resource_name else root.get_class_name()
-	var item_names: PackedStringArray = []
-	for i: int in item_count:
-		item_names.push_back(get_item_text(i))
-	
-	# var id: String = ""
-	# while root_name + id in item_names:
-	# 	id = str(id.to_int() + 1) if id else "1"
-	
-	# root_name += id
-	root.resource_name = root_name
-
-	return root_name
-
-
 func _on_root_changed(root: RationalComponent) -> void:
 	update_item_display(get_item_index(root), root)
 
@@ -130,3 +105,76 @@ func _on_root_removed(root: RationalComponent) -> void:
 
 func _on_filter_text_changed(new_text: String) -> void:
 	filter_list(new_text)
+
+
+func _on_item_activated(index: int) -> void:
+	ensure_current_is_visible()
+	root_selected.emit(get_item_metadata(index))
+
+
+func _on_add_root_button_pressed() -> void:
+	
+	pass
+
+
+func create_root(res: RationalComponent) -> void:
+	pass
+
+
+#region Drag&Drop
+
+
+func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+	match typeof(data):
+		TYPE_INT:
+			return data > -1
+		TYPE_OBJECT:
+			return data is RationalComponent
+		TYPE_STRING:
+			return data and (data.contains(".tscn") or data.contains(".tres"))
+
+		_:
+			return false
+
+	
+func _drop_data(at_position: Vector2, data: Variant) -> void:
+	match typeof(data):
+		# Moves item if the dropped rational component is already in list
+		TYPE_INT:
+			move_item(data, get_item_at_position(at_position, false))
+
+		TYPE_OBJECT when data is RationalComponent:
+			create_item(data)
+			
+		TYPE_STRING:
+			pass
+
+
+		
+
+
+func _get_drag_data(at_position: Vector2) -> Variant:
+	var item: int = get_item_at_position(at_position, true)
+	if item > -1:
+		var button: Button = Button.new()
+		button.text = get_item_text(item)
+		button.icon = get_item_icon(item)
+		button.modulate.a = 0.65
+		set_drag_preview(button)
+
+	return item
+
+
+#endregion 
+
+
+#
+
+
+#
+
+## Creates unique name and changes root [code]resource_name[/code] to it
+func get_unique_root_name(root: RationalComponent) -> String:
+	var root_name: String = root.resource_name if root.resource_name else root.get_class_name()
+	root.resource_name = root_name
+	return root_name

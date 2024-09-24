@@ -1,10 +1,11 @@
 @tool
 @icon("res://addons/rational/icons/NewRoot.svg")
-class_name Root extends Decorator
+class_name MasterRoot extends Decorator
+## This class is an internal property that serves as an extension of the RationalTree
+## node that owns it. 
 
-@export var tree_name: String:
-	set(val):
-		tree_name = val
-		changed.emit()
 
+func _init(name: String = "") -> void:
+	resource_name = name
+	
 

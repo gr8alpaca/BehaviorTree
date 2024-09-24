@@ -5,3 +5,4 @@
 [resource]
 resource_name = "RationalCache"
 script = ExtResource("1_l8sty")
+file_paths = PackedStringArray()

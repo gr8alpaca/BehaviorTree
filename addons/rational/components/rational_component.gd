@@ -9,10 +9,10 @@ signal parent_changed(parent: RationalComponent)
 
 
 ## Root that this component extends from. If null it is assumed this resource is a tree/subtree.
-@export_custom(PROPERTY_HINT_RESOURCE_TYPE, "RationalComponent", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_READ_ONLY)
-var parent: RationalComponent: set = set_root
+@export_custom(0, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_NO_INSTANCE_STATE)
+var parent: RationalComponent: set = set_parent
 
-func set_root(val: RationalComponent) -> void:
+func set_parent(val: RationalComponent) -> void:
 		parent = val
 		parent_changed.emit(parent)
 
@@ -40,21 +40,18 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func _set(property: StringName, value: Variant) -> bool:
-	if Engine.is_editor_hint():
+	match property:
 
-		match property:
-			&"resource_name":
-				resource_name = value if value else get_class_name().back()
-				changed.emit()
+		&"resource_name":
+			resource_name = value if value else get_class_name().back()
+			changed.emit()
 
-			&"resource_path":
-				resource_path = value
-				changed.emit()
+		&"resource_path":
+			resource_path = value
+			changed.emit()
 
-			&"resource_local_to_scene":
-				resource_local_to_scene = true
-				
 	return false
+
 
 ## Do [b]not[/b] override this method, use [method _tick] instead.
 func tick(delta: float, board: Blackboard, actor: Node) -> int:

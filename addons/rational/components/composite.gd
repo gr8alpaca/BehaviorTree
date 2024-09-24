@@ -5,16 +5,31 @@ class_name Composite extends RationalComponent
 signal children_changed
 
 
-@export_custom(PROPERTY_HINT_TYPE_STRING, "24/17:RationalComponent", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE)
+@export_custom(PROPERTY_HINT_TYPE_STRING, "24/17:RationalComponent", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_NEVER_DUPLICATE | PROPERTY_USAGE_DEFERRED_SET_RESOURCE)
 var children: Array[RationalComponent]: set = set_children
 
+
+func activate_root() -> void:
+	assert(Engine.is_editor_hint(), "Attempting to set root outside of editor.")
+	for child: RationalComponent in get_children(true):
+		if not child.has_signal(&"children_changed"): continue
+		if not child.children_changed.is_connected(_on_child_children_changed):
+			child.children_changed.connect(_on_child_children_changed.bind(child))
+
+
+
+func deactivate_root() -> void:
+	pass
+
+func _on_child_children_changed(child: RationalComponent) -> void:
+	pass
 
 func set_children(val: Array[RationalComponent]) -> void:
 	children = val
 
 	for child: RationalComponent in children:
 		if not child: continue
-		child.parent =  self
+		child.parent = self
 
 	children_changed.emit()
 	notify_property_list_changed()
@@ -38,7 +53,6 @@ func get_children(recursive: bool = false) -> Array[RationalComponent]:
 	if recursive:
 		for child: RationalComponent in children:
 			all_children += child.get_children(recursive)
-
 	return all_children
 
 
@@ -58,6 +72,7 @@ func _get_property_list() -> Array[Dictionary]:
 				usage = PROPERTY_USAGE_EDITOR,
 			}
 		]
+
 
 func _set(property: StringName, value: Variant) -> bool:
 	if Engine.is_editor_hint():

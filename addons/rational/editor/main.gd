@@ -19,18 +19,6 @@ func edit_tree(tree: RationalTree) -> void:
 	edit_tree_pressed.emit(tree)
 
 
-func _on_instantiate(paths: PackedStringArray) -> void:
-	print_rich("Paths instantiated: \n[color=yellow]", "[/color] | [color=yellow]".join(paths), "[/color] \n@ ", Ut.ts())
-
-
-func _on_resource_selected(resource: Resource, path: String) -> void:
-	print_rich("Selected [color=orange]%s[/color] at \"%s\"" % [resource, Ut.col(path)])
-
-
-# func _on_edited_object_changed() -> void:
-# 	var inspector: EditorInspector = EditorInterface.get_inspector()
-	# if inspector.get_edited_object() is 
-
 
 func _on_scene_changed(scene_root: Node) -> void:
 	# for tree: RationalTree in scene_root.find_children("", "RationalTree", true, true):

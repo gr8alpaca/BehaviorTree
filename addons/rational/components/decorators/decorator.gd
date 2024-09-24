@@ -31,27 +31,21 @@ func _get(property: StringName) -> Variant:
 
 func _set(property: StringName, value: Variant) -> bool:
 	if property == &"child":
-		if not value:
-			children = []
-		else:
-			children = [value]
+		var childs: Array[RationalComponent]
+		if value: childs.push_back(value)
+		children = childs
 
 	return super(property, value)
 
 
 func _get_property_list() -> Array[Dictionary]:
-	var result: Array[Dictionary] = []
-	#if children.is_empty():
-		#result.assign(super())
-	result.append(
-			{
+	return [{
 				"name": &"child",
 				"type": TYPE_OBJECT,
 				"hint": PROPERTY_HINT_RESOURCE_TYPE,
 				"hint_string": &"RationalComponent",
 				"usage": PROPERTY_USAGE_EDITOR,
-			})
-	return result
+			}] 
 
 func _property_can_revert(property: StringName) -> bool:
 	if property == &"child":
