@@ -24,8 +24,8 @@ func _parse_begin(object: Object) -> void:
 	# add_custom_control(create_button(edit_tree.bind(object)))
 
 
-func _parse_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint,
-	hint_string: String, usage_flags: int, wide: bool) -> bool:
+func _parse_property(object: Object, type: Variant.Type, name: String, hint_type: PropertyHint,hint_string: String, usage_flags: int, wide: bool) -> bool:
+	
 	
 	if name != "actor":
 		return false

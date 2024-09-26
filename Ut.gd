@@ -5,26 +5,36 @@ var data: Dictionary = {key = "key"}
 
 var tw: Tween
 
-const Util := preload("res://addons/rational/util.gd")
-
+#const Util := preload("res://addons/rational/util.gd")
+#const RationalPicker = preload("res://addons/rational/plugins/inspector/rational_property.gd")
 func _run() -> void:
+	var class_list: Array[Dictionary] = ProjectSettings.get_global_class_list().filter(func(x: Dictionary)->bool: return x.class in ["Composite", "Leaf", "Decorator", "RationalComponent", "RationalTree"] )
+	for d in class_list:
+		pass
+			
+
+	
+	print(ResourceLoader.get_dependencies("res://addons/rational/components/fallback.gd"))
+
+	return
 	var theme: Theme = EditorInterface.get_editor_theme()
 	var fs: EditorFileSystem = EditorInterface.get_resource_filesystem()
 	var plugin: EditorPlugin = Engine.get_singleton(&"Rational")
-	var scene := get_scene()
-	var cache := load("res://addons/rational/data/cache.tres")
-	print(JSON.stringify(cache.get_property_list(), "\t"))
-	#var t: Tree = plugin.editor.get_node(^"%TreeDisplay")
-	#var mainscreen:= scene.get_parent().get_parent().get_parent()
-	#print(scene.get_path())
-	#plugin._edit(scene)
-	#print("Node: ", mainscreen, "CHILD COUNT: ", mainscreen.get_child_count())
-	#print(mainscreen.get_children())
-	#var s:= JSON.stringify(cache)
-	#print(s)
-	#print(theme.has_icon(&"RationalTree", &"EditorIcons"))
-	return
+	var scene : PopupMenu = get_scene()
+	var submenu: PopupMenu = create_submenu(["Sub1", "Sub2", "Sub3"])
+	scene.add_submenu_node_item( "Sub1", submenu, )
+	submenu.owner = scene
 	
+	
+func create_submenu(text: PackedStringArray) -> PopupMenu:
+	var menu: PopupMenu = PopupMenu.new()
+	var id: int = 0
+	for item: String in text:
+		menu.add_item(item,id,)
+
+	return menu 
+func foo_print(string: String = "foo_print() called!") -> void:
+	printt(string)
 
 func print_inspector_path() -> void:
 	var inspector := EditorInterface.get_inspector()

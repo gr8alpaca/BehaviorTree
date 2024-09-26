@@ -25,3 +25,6 @@ static func get_class_icon(names: Array[StringName]) -> Texture2D:
 		return icons.get_or_add(name, get_class_icon(names))
 
 	return icons.get_or_add(&"invalid", EditorInterface.get_editor_theme().get_icon(&"FileBroken", &"EditorIcons"))
+
+static func icon_by_string(class_string: StringName) -> Texture2D:
+	return get_class_icon([class_string])

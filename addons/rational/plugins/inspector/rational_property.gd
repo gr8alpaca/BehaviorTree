@@ -1,33 +1,84 @@
 @tool
-extends EditorProperty
+extends EditorResourcePicker
+
+const Util := preload("res://addons/rational/util.gd")
+
+func _init(base_type: String = "RationalComponent") -> void:
+	self.base_type = base_type
 
 
-# func _ready() -> void:
-# 	var but: Button = preload("rational_picker.gd").new()
-# 	but.text = "Add child from script..."
-# 	but.icon = preload("../editor/icons/Load.svg")
-# 	but.pressed.connect(_on_button_pressed)
+func _handle_menu_selected(idx: int) -> bool:
+
+	return false
+
+
+func _set_create_options(menu_node: Object) -> void:
+	var menu: PopupMenu = menu_node
+
+	var item: int = 0
+	menu_node.remove_item(item)
+	item += 1
+
+
+	const MENU_ITEMS: PackedStringArray = ["Composite", "Leaf", "Decorator"]
+	var class_list: Array[Dictionary] = ProjectSettings.get_global_class_list().filter(func(x: Dictionary)->bool: return x.name in ["Composite", "Leaf", "Decorator", "RationalComponent", "RationalTree"] )
+	for dict: Dictionary in class_list:
+		(dict.path)
+	var bases: Dictionary
 	
-
-func _on_button_pressed() -> void:
-	var file_dialog:= EditorFileDialog.new()
-	file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
-	file_dialog.add_filter("*.gd", "GDScript")
-
-	file_dialog.file_selected.connect(_on_file_dialog_file_selected)
-	file_dialog.close_requested.connect(_on_file_dialog_close_requested.bind(file_dialog))
-	
-	EditorInterface.popup_dialog_centered_ratio(file_dialog, 0.7)
+	for menu_name: String in MENU_ITEMS:
+		bases[menu_name] = []
+		var inhereting_classes: PackedStringArray = []
+		for dict: Dictionary in class_list:
+			bases[dict.name] = dict.base
 
 
-func _update_property() -> void:
-	pass
- 
+	var subs: Dictionary={"Composite" = [], "Leaf" = [], "Decorator" = [],}
 
-func _on_file_dialog_close_requested(file_dialog: EditorFileDialog) -> void:
-	if file_dialog:
-		file_dialog.free()
+	for cname: String in bases.keys():
+
+		var base_name: String = bases[cname]
+		while base_name:
+			match base_name:
+				"Decorator": 
+					subs["Decorator"].append(cname)
+				"Composite": 
+					subs["Composite"].append(cname)
+				"Leaf": 
+					subs["Leaf"].append(cname)
+				_: 
+					base_name = bases.get(base_name, "")
+					continue
+			break
+
+
+
+	for base_class: String in ["Composite", "Leaf", "Decorator"]:
+		var sub: Dictionary = {
+			base_class = base_class,
+			icon = Util.icon_by_string(base_class),
+			subitems = [], }
 		
+	# for i: int in menu.item_count:
+	# 	var item_name: String = menu.get_item_text(i)
+		# if item_name not in ["Component", "Leaf", "Composite"]: pass
 
-func _on_file_dialog_file_selected(file: String) -> void:
-	pass
+	var create_submenu: Callable = \
+		func(items: Array[Dictionary]) -> PopupMenu:
+			var submenu: PopupMenu = PopupMenu.new()
+			for i: int in items.size(): submenu.add_icon_item(items[i].icon, items[i].text)
+			return submenu
+
+	# menu.set_item_submenu_node(
+
+
+func _set(property: StringName, value: Variant) -> bool:
+	
+	match property:
+		
+		&"edited_resource":
+			edited_resource = value
+			resource_changed.emit.call_deferred(value)
+
+		
+	return false

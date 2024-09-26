@@ -16,7 +16,7 @@ enum {SUCCESS, FAILURE, RUNNING}
 @export_custom(PROPERTY_HINT_RESOURCE_TYPE, "Blackboard", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_NEVER_DUPLICATE | PROPERTY_USAGE_EDITOR_INSTANTIATE_OBJECT)
 var blackboard: Blackboard = Blackboard.new(): set = set_blackboard
 
-@export_custom(0,"", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_NEVER_DUPLICATE | PROPERTY_USAGE_EDITOR_INSTANTIATE_OBJECT )
+@export_custom(0, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_SCRIPT_VARIABLE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_NEVER_DUPLICATE | PROPERTY_USAGE_EDITOR_INSTANTIATE_OBJECT)
 var master_root: Decorator = Decorator.new():
 	set(val): master_root = val if val else Decorator.new()
 
@@ -75,17 +75,16 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return warnings
 
 
-
 func _get_property_list() -> Array[Dictionary]:
 	var props: Array[Dictionary]
 	props.push_back({
-			name = &"root",
-			type = TYPE_OBJECT,
-			hint = PROPERTY_HINT_RESOURCE_TYPE,
-			hint_string = "Composite",
-			usage = PROPERTY_USAGE_DEFAULT,
+			name=&"root",
+			type=TYPE_OBJECT,
+			hint=PROPERTY_HINT_RESOURCE_TYPE,
+			hint_string="Composite",
+			usage=PROPERTY_USAGE_DEFAULT,
 		})
-		
+	
 	return props
 
 
@@ -93,10 +92,10 @@ func _set(property: StringName, value: Variant) -> bool:
 	match property:
 		&"root":
 			master_root.set(&"child", value)
-			notify_property_list_changed()
+			# notify_property_list_changed()
 			return true
-		_:
-			return false
+
+	return false
 
 
 func _get(property: StringName) -> Variant:
@@ -113,7 +112,6 @@ func _notification(what: int) -> void:
 
 		NOTIFICATION_PATH_RENAMED when has_user_signal(&"path_changed"):
 			emit_signal(&"path_changed")
-
 
 
 		NOTIFICATION_PARENTED when not actor:
